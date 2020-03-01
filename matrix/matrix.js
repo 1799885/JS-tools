@@ -106,6 +106,39 @@ var matrix = {
           console.log("Not correct axis");
           return null;
       }
+    },
+    /**
+     * Generates rotation matrices on any of the 3 axis.
+     * @param {number} axis - The axis of rotation (Regex sensitive): X:[xXi], Y:[yYj], Z:[zZk]
+     * @param {number} o - Angle of rotation (radians)
+     * @returns {number[][]} 3D rotation-matrix in order to rotate "o" radians on the "axis" axis.
+     */
+    rotation4D(axis, o){//3D matrix
+      switch(true){
+        case /[xXi]/.test(axis):
+          return [
+            [           1,            0,            0,            0],
+            [           0,  Math.cos(o), -Math.sin(o),            0],
+            [           0,  Math.sin(o),  Math.cos(o),            0],
+            [           0,            0,            0,            1]];
+
+        case /[yYj]/.test(axis):
+          return [
+            [ Math.cos(o),            0,  Math.sin(o),            0], 
+            [           0,            1,            0,            0], 
+            [-Math.sin(o),            0,  Math.cos(o),            0],
+            [           0,            0,             0,           1]];
+
+        case /[zZk]/.test(axis):
+          return [
+            [ Math.cos(o), -Math.sin(o),            0,            0],
+            [ Math.sin(o),  Math.cos(o),            0,            0],
+            [           0,            0,            1,            0],
+            [           0,            0,            0,            1]];     
+        case true:
+          console.log("Not correct axis");
+          return null;
+      }
     }
   },
   /**
