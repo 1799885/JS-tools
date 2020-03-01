@@ -244,6 +244,21 @@ var matrix = {
         console.log(error);
         return null;
       }
+    },
+    /**
+     * Returns an array in order to use the applyMatrix() function from P5.
+     * @param {any[][]} m - matrix 
+     * @returns {any[]} array with all the elements of the matrix following the WHATWG specification naming
+     */
+    applyRotation(m){
+      let s = matrix.p.size(m);
+      let arr = [];
+      for(let i = 0; i < s.x; i++){
+        for(j = 0; j < s.y; j++){
+          arr.push(m[i][j]);
+        }
+      }
+      return arr;
     }
   },
   /**
@@ -549,7 +564,6 @@ var matrix = {
 /*
   TO DO:
     - Simplified syntax
-    -JS-DOC
-      
-      *Dot
+    -translation matrix
+    -scale matrix
   */
