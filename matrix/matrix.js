@@ -83,7 +83,7 @@ var matrix = {
      * @param {number} o - Angle of rotation (radians)
      * @returns {number[][]} 3D rotation-matrix in order to rotate "o" radians on the "axis" axis.
      */
-    rotation(axis, o){//3D matrix
+    rotation3D(axis, o){//3D matrix
       switch(true){
         case /[xXi]/.test(axis):
           return [
@@ -113,7 +113,7 @@ var matrix = {
      * @param {number} o - Angle of rotation (radians)
      * @returns {number[][]} 3D rotation-matrix in order to rotate "o" radians on the "axis" axis.
      */
-    rotation4D(axis, o){//3D matrix
+    rotation(axis, o){//4D matrix
       switch(true){
         case /[xXi]/.test(axis):
           return [
@@ -139,6 +139,44 @@ var matrix = {
           console.log("Not correct axis");
           return null;
       }
+    },
+    /**
+     * Generates rotation matrices from a origin's axis.
+     * @param {number} axis - The axis of rotation (Regex sensitive): X:[xXi], Y:[yYj], Z:[zZk]
+     * @param {number} o - Angle of rotation (radians)
+     * @returns {number[][]} 3D rotation-matrix in order to rotate "o" radians from the "axis" axis.
+     */
+    rotationOrigin(axis, o){
+      let v = createVector(0, 0, 0);
+      switch(true){
+        case /[xXi]/.test(axis):
+          v.x = 1;
+          break;
+        case /[yYj]/.test(axis):
+          v.y = 1;
+          break;
+        case /[zZk]/.test(axis):
+          v.z = 1;
+          break;
+        case true:
+          console.log("Not correct axis");
+          return null;
+      }
+      let m = matrix.make.zero(4);
+      m[0][0] = v.x * v.x + (1 - v.x * v.x) * Math.cos(o);
+      m[1][0] = v.x * v.y * (1 - Math.cos(o)) - v.z * Math.sin(o);
+      m[2][0] = v.x * v.z * (1 - Math.cos(o)) + v.y * Math.sin(o);
+      
+      m[0][1] = v.x * v.y * (1 - Math.cos(o)) + v.z * Math.sin(o);
+      m[1][1] = v.y * v.y + (1 - v.y * v.y) * Math.cos(o);
+      m[2][1] = v.y * v.z * (1 - Math.cos(o)) - v.x * Math.sin(o);
+      
+      m[0][2] = v.x * v.z * (1 - Math.cos(o)) - v.y * Math.sin(o);
+      m[1][2] = v.y * v.z * (1 - Math.cos(o)) + v.x * Math.sin(o);
+      m[2][2] = v.z * v.z + (1 - v.z * v.z) * Math.cos(o);
+      
+      m[3][3] = 1;
+      return m;
     },
     translation(x,y,z){
       try{
