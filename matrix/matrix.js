@@ -141,7 +141,7 @@ var matrix = {
       }
     },
     /**
-     * Generates rotation matrices from a origin's axis.
+     * Generates rotation matrices from a origin's axis. See https://sites.google.com/site/glennmurray/Home/rotation-matrices-and-formulas/rotation-about-an-arbitrary-axis-in-3-dimensions for more information
      * @param {number} axis - The axis of rotation (Regex sensitive): X:[xXi], Y:[yYj], Z:[zZk]
      * @param {number} o - Angle of rotation (radians)
      * @returns {number[][]} 3D rotation-matrix in order to rotate "o" radians from the "axis" axis.
