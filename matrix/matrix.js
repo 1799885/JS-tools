@@ -139,6 +139,13 @@ var matrix = {
           console.log("Not correct axis");
           return null;
       }
+    },
+    traslation(x,y,z){
+      let m = matrix.make.identity(4);
+      m[0][3] = (x)? x : 0;
+      m[1][3] = (y)? y : 0;
+      m[2][3] = (z)? z : 0;
+      return  m;
     }
   },
   /**
