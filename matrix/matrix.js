@@ -141,11 +141,22 @@ var matrix = {
       }
     },
     traslation(x,y,z){
-      let m = matrix.make.identity(4);
-      m[0][3] = (x)? x : 0;
-      m[1][3] = (y)? y : 0;
-      m[2][3] = (z)? z : 0;
-      return  m;
+      try{
+        if(typeof(x) != number){ //atempt to get x,y,z from a P5/diccionary
+          y = x.y;
+          z = x.z;
+          x = x.x;
+        }
+        let m = matrix.make.identity(4);
+        m[0][3] = (x)? x : 0;
+        m[1][3] = (y)? y : 0;
+        m[2][3] = (z)? z : 0;
+        return  m;
+      }
+      catch(error){
+        console.log(error);
+        return null;
+      }
     }
   },
   /**
