@@ -140,17 +140,17 @@ var matrix = {
           return null;
       }
     },
-    traslation(x,y,z){
+    translation(x,y,z){
       try{
-        if(typeof(x) != number){ //atempt to get x,y,z from a P5/diccionary
+        if(typeof(x) != "number"){ //atempt to get x,y,z from a P5/diccionary
           y = x.y;
           z = x.z;
           x = x.x;
         }
         let m = matrix.make.identity(4);
-        m[0][3] = (x)? x : 0;
-        m[1][3] = (y)? y : 0;
-        m[2][3] = (z)? z : 0;
+        m[3][0] = (x)? x : 0;
+        m[3][1] = (y)? y : 0;
+        m[3][2] = (z)? z : 0;
         return  m;
       }
       catch(error){
