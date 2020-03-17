@@ -87,13 +87,13 @@ var matrix = {
       o = -o;
       let v = createVector(0, 0, 0);
       switch(true){
-        case /[xXi]/.test(axis):
+        case vector.re.X.test(axis):
           v.x = 1;
           break;
-        case /[yYj]/.test(axis):
+        case vector.re.Y.test(axis):
           v.y = 1;
           break;
-        case /[zZk]/.test(axis):
+        case vector.re.Z.test(axis):
           v.z = 1;
           break;
         case true:
@@ -124,14 +124,11 @@ var matrix = {
      * @returns {number[][]} 3D rotation-matrix in order to rotate "o" radians from the "axis" axis.
      */
     
-
-
     
-    rotationOrigin(axis, o, rMatrix){
+     rotationOrigin(axis, o, rMatrix){
       if(rMatrix){ //conversor
-        console.log("********* conversor **************");
         let v = [[0],[0],[0],[0]];
-        switch(true){
+        switch(true){ //Make axis-vector
           case vector.re.X.test(axis):
             v[0][0] = 1;
             break;
@@ -143,15 +140,12 @@ var matrix = {
             break;
         }
         v = vector.toVector(matrix.o.mult(rMatrix, v), true);
-
-        let trueAxisIndex = 0, angleOrientation = 1;
-        let convertor = ["x","y","z"];
-
+        let tAi = 0, aOri = 1;//tAi -> trueAxisIndex; aOri -> axis orientation
         for(let i = 0; i < v.length; i++){
-          trueAxisIndex += Math.abs(v[i]) * i;
-          angleOrientation = (v[i] < 0)? -1 : angleOrientation;
+          tAi += Math.abs(v[i]) * i;
+          aOri = (v[i] < 0)? -1 : aOri;
         }
-        return matrix.make.rotation(convertor[trueAxisIndex], angleOrientation * o);
+        return matrix.make.rotation(vector.re.conversor[tAi], aOri * o);
       }
       return matrix.make.rotation(axis, o);
     },
@@ -181,13 +175,13 @@ var matrix = {
     reflexion(axis){
       let m = matrix.make.identity(4);
       switch(true){
-        case /[xXi]/.test(axis):
+        case vector.re.X.test(axis):
           
           break;
-        case /[yYj]/.test(axis):
+        case vector.re.Y.test(axis):
           
           break;  
-        case /[zZk]/.test(axis):
+        case vector.re.Z.test(axis):
 
           break;           
         case true:
@@ -633,6 +627,4 @@ var matrix = {
     -JSDOC
     Y = arr[0].length
     X = arr.length
-
-    matrix.X = regex value to have it unified
   */

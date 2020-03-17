@@ -87,6 +87,12 @@ var vector = {
       return null;
     }
 
+  },
+  re: {
+    X: /[xXi0]/,
+    Y: /[yYj1]/,
+    Z: /[zZk2]/,
+    conversor: ["x","y","z"]
   }
 }
   
