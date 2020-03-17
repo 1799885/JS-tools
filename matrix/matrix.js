@@ -84,6 +84,7 @@ var matrix = {
      * @returns {number[][]} 3D rotation-matrix in order to rotate "o" radians on the "axis" axis.
      */
     rotation(axis, o){//4D matrix
+      o = -o;
       let v = createVector(0, 0, 0);
       switch(true){
         case /[xXi]/.test(axis):
@@ -131,21 +132,17 @@ var matrix = {
         console.log("********* conversor **************");
         let v = [[0],[0],[0],[0]];
         switch(true){
-          case /[xXi]/.test(axis):
+          case vector.re.X.test(axis):
             v[0][0] = 1;
             break;
-          case /[yYj]/.test(axis):
+          case vector.re.Y.test(axis):
             v[1][0] = 1;
             break;
-          case /[zZk]/.test(axis):
+          case vector.re.Z.test(axis):
             v[2][0] = 1;
             break;
         }
-        // printMatrix_nD(rMatrix, "\n", true);
-        // printMatrix_nD(v, "\n", true);
         v = vector.toVector(matrix.o.mult(rMatrix, v), true);
-        // console.log(v);
-
 
         let trueAxisIndex = 0, angleOrientation = 1;
         let convertor = ["x","y","z"];
@@ -154,7 +151,6 @@ var matrix = {
           trueAxisIndex += Math.abs(v[i]) * i;
           angleOrientation = (v[i] < 0)? -1 : angleOrientation;
         }
-        // console.log(convertor[trueAxisIndex]+ " " + angleOrientation);
         return matrix.make.rotation(convertor[trueAxisIndex], angleOrientation * o);
       }
       return matrix.make.rotation(axis, o);
