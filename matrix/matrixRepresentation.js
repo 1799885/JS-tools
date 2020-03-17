@@ -30,8 +30,3 @@ function matrixToString(m, delimeter, round){
         return str;
     }
 }
-/*
-TO DO:
-
--add JSDOC
-*/

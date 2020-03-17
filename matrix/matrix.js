@@ -2,6 +2,8 @@
  * 
  * Matrix diccionary with multiple functionalities
  * 
+ * @see X Row = arr.length
+ * @see Y Rol = arr[0].length
  * @property make - Dictionary with some functions to generate matrices.
  * @property p - Dictionary with some functions to get matrices' properties.
  * @property o - Dictionary with some functions to operate matrices.
@@ -610,21 +612,3 @@ var matrix = {
     }
   }
 }
-
-/*
-  TO DO:
-    - Simplified syntax
-    -translation matrix
-    -scale matrix
-    -reflexion + jsdoc
-    -translation jsdoc
-
-    -JS-doc:
-      ·optional parameters: @param {string} [somebody] - Somebody's name
-
-  -Rotation matrix
-    -errors
-    -JSDOC
-    Y = arr[0].length
-    X = arr.length
-  */
