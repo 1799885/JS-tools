@@ -46,6 +46,47 @@ var vector = {
       console.log(error);
       return null;
     }
+  },
+  toVector: function(m, round){ //col vector or row vector to true vector;
+    try{
+      if(!round){
+        if(m.length == 1){//row vector
+          return m[0];
+        }
+        else if(m[0].length == 1){//col vector
+          let v = [];
+          for(let i = 0; i < m.length; i++){
+            v.push(m[i][0]);
+          }
+          return v;
+        }
+        else{
+          throw "Not correct dimensions to transform into a Vector/Array";
+        }
+      }
+      else{
+        let v = [];
+        if(m.length == 1){//row vector
+          for(let i = 0; i < m[0].length; i++){
+            v.push(Math.round(m[0][i]));
+          }
+        }
+        else if(m[0].length == 1){//col vector
+          for(let i = 0; i < m.length; i++){
+            v.push(Math.round(m[i][0]));
+          }
+        }
+        else{
+          throw "Not correct dimensions to transform into a Vector/Array";
+        }
+        return v;
+      }
+    }
+    catch(error){
+      console.log(error);
+      return null;
+    }
+
   }
 }
   
