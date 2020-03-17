@@ -78,75 +78,12 @@ var matrix = {
       return c;
     },
     /**
-     * Generates rotation matrices on any of the 3 axis.
-     * @param {number} axis - The axis of rotation (Regex sensitive): X:[xXi], Y:[yYj], Z:[zZk]
-     * @param {number} o - Angle of rotation (radians)
-     * @returns {number[][]} 3D rotation-matrix in order to rotate "o" radians on the "axis" axis.
-     */
-    rotation3D(axis, o){//3D matrix
-      switch(true){
-        case /[xXi]/.test(axis):
-          return [
-            [           1,            0,            0],
-            [           0,  Math.cos(o), -Math.sin(o)],
-            [           0,  Math.sin(o), Math.cos(o)]];
-
-        case /[yYj]/.test(axis):
-          return [
-            [ Math.cos(o),            0,  Math.sin(o)], 
-            [           0,            1,            0], 
-            [-Math.sin(o),            0, Math.cos(o)]];
-
-        case /[zZk]/.test(axis):
-          return [
-            [ Math.cos(o), -Math.sin(o),            0],
-            [ Math.sin(o),  Math.cos(o),            0],
-            [           0,            0,            1]];      
-        case true:
-          console.log("Not correct axis");
-          return null;
-      }
-    },
-    /**
-     * Generates rotation matrices on any of the 3 axis.
+     * Generates rotation matrices on any of the 3 axis. See https://sites.google.com/site/glennmurray/Home/rotation-matrices-and-formulas/rotation-about-an-arbitrary-axis-in-3-dimensions for more information.
      * @param {number} axis - The axis of rotation (Regex sensitive): X:[xXi], Y:[yYj], Z:[zZk]
      * @param {number} o - Angle of rotation (radians)
      * @returns {number[][]} 3D rotation-matrix in order to rotate "o" radians on the "axis" axis.
      */
     rotation(axis, o){//4D matrix
-      switch(true){
-        case /[xXi]/.test(axis):
-          return [
-            [           1,            0,            0,            0],
-            [           0,  Math.cos(o), -Math.sin(o),            0],
-            [           0,  Math.sin(o),  Math.cos(o),            0],
-            [           0,            0,            0,            1]];
-
-        case /[yYj]/.test(axis):
-          return [
-            [ Math.cos(o),            0,  Math.sin(o),            0], 
-            [           0,            1,            0,            0], 
-            [-Math.sin(o),            0,  Math.cos(o),            0],
-            [           0,            0,             0,           1]];
-
-        case /[zZk]/.test(axis):
-          return [
-            [ Math.cos(o), -Math.sin(o),            0,            0],
-            [ Math.sin(o),  Math.cos(o),            0,            0],
-            [           0,            0,            1,            0],
-            [           0,            0,            0,            1]];     
-        case true:
-          console.log("Not correct axis");
-          return null;
-      }
-    },
-    /**
-     * Generates rotation matrices from a origin's axis. See https://sites.google.com/site/glennmurray/Home/rotation-matrices-and-formulas/rotation-about-an-arbitrary-axis-in-3-dimensions for more information
-     * @param {number} axis - The axis of rotation (Regex sensitive): X:[xXi], Y:[yYj], Z:[zZk]
-     * @param {number} o - Angle of rotation (radians)
-     * @returns {number[][]} 3D rotation-matrix in order to rotate "o" radians from the "axis" axis.
-     */
-    rotationOrigin(axis, o){
       let v = createVector(0, 0, 0);
       switch(true){
         case /[xXi]/.test(axis):
@@ -178,6 +115,41 @@ var matrix = {
       m[3][3] = 1;
       return m;
     },
+    /**
+     * Generates rotation matrices from the origin's axis. 
+     * @param {string} axis - The axis of rotation (Regex sensitive): X:[xXi], Y:[yYj], Z:[zZk]
+     * @param {number} o - Angle of rotation (radians)
+     * @param {number[][]} rMatrix - Current rotation matrix to select the equivalent axis.
+     * @returns {number[][]} 3D rotation-matrix in order to rotate "o" radians from the "axis" axis.
+     */
+    
+
+
+    
+    rotationOrigin(axis, o, rMatrix){
+      if(rMatrix){ //conversor
+        console.log("********* conversor **************");
+        let v = [[1],[1],[1],[1]];
+        // let v = [[1,1,1,1]];//colum vector
+        // let o = matrix.o.transpose(rMatrix);
+        let o = matrix.o.mult(rMatrix, v);
+        printMatrix_nD(rMatrix);
+        // console.log(rMatrix);
+        printMatrix_nD(v);
+        printMatrix_nD(o);
+
+        console.log(matrix.p.getRow(rMatrix, 2));
+        console.log(matrix.p.getCol(v, 0));
+        console.log(vector.escalar(matrix.p.getRow(rMatrix, 0), matrix.p.getCol(v, 0)))
+
+      }
+      return matrix.make.rotation(axis, o);
+    },
+
+
+
+
+
     translation(x,y,z){
       try{
         if(typeof(x) != "number"){ //atempt to get x,y,z from a P5/diccionary
@@ -195,6 +167,24 @@ var matrix = {
         console.log(error);
         return null;
       }
+    },
+    reflexion(axis){
+      let m = matrix.make.identity(4);
+      switch(true){
+        case /[xXi]/.test(axis):
+          
+          break;
+        case /[yYj]/.test(axis):
+          
+          break;  
+        case /[zZk]/.test(axis):
+
+          break;           
+        case true:
+          console.log("Not correct axis");
+          return null;
+      }
+      return m;
     }
   },
   /**
@@ -248,8 +238,8 @@ var matrix = {
     getRow: function(m, row){
       try{
         let r = [];
-        for(let j = 0; j < m.length; j++){
-          r.push(m[row][j]);
+        for(let j = 0; j < m[0].length; j++){
+          r.push(m[row][j]); //On a especific row, all the elements
         }
         return r;
       }
@@ -268,7 +258,7 @@ var matrix = {
       try{
         let r = [];
         for(let i = 0; i < m.length; i++){
-          r.push(m[i][col]);
+          r.push(m[i][col]);//for each row, the col position
         }
         return r;
       }
@@ -400,15 +390,15 @@ var matrix = {
         }
         let sizeA = matrix.p.size(a);
         let sizeB = matrix.p.size(b);
-        if(sizeA.x != sizeB.y){
+        if(sizeA.y != sizeB.x){
           throw "not the same dimensions";
         }
 
         //let range = sizeA.x;
-        let m = matrix.make.empty(sizeB.x, sizeA.y);
-        for(let i = 0; i < sizeB.x; i++){
-          for(let j = 0; j < sizeA.y; j++){
-            m[i][j] = vector.escalar(matrix.p.getRow(a, i), matrix.p.getCol(b, j));
+        let m = matrix.make.empty(sizeA.x, sizeB.y);
+        for(let i = 0; i < sizeB.y; i++){ //for each col in b
+          for(let j = 0; j < sizeA.x; j++){ //for each row in a
+            m[j][i] = vector.escalar(matrix.p.getRow(a, j), matrix.p.getCol(b, i));
           }
         }
         return m;
@@ -622,4 +612,12 @@ var matrix = {
     - Simplified syntax
     -translation matrix
     -scale matrix
+    -reflexion + jsdoc
+    -translation jsdoc
+
+    -JS-doc:
+      ·optional parameters: @param {string} [somebody] - Somebody's name
+
+    Y = arr[0].length
+    X = arr.length
   */
