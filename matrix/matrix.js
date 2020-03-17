@@ -129,19 +129,33 @@ var matrix = {
     rotationOrigin(axis, o, rMatrix){
       if(rMatrix){ //conversor
         console.log("********* conversor **************");
-        let v = [[1],[1],[1],[1]];
-        // let v = [[1,1,1,1]];//colum vector
-        // let o = matrix.o.transpose(rMatrix);
-        let o = matrix.o.mult(rMatrix, v);
-        printMatrix_nD(rMatrix);
-        // console.log(rMatrix);
-        printMatrix_nD(v);
-        printMatrix_nD(o);
+        let v = [[0],[0],[0],[0]];
+        switch(true){
+          case /[xXi]/.test(axis):
+            v[0][0] = 1;
+            break;
+          case /[yYj]/.test(axis):
+            v[1][0] = 1;
+            break;
+          case /[zZk]/.test(axis):
+            v[2][0] = 1;
+            break;
+        }
+        // printMatrix_nD(rMatrix, "\n", true);
+        // printMatrix_nD(v, "\n", true);
+        v = vector.toVector(matrix.o.mult(rMatrix, v), true);
+        // console.log(v);
 
-        console.log(matrix.p.getRow(rMatrix, 2));
-        console.log(matrix.p.getCol(v, 0));
-        console.log(vector.escalar(matrix.p.getRow(rMatrix, 0), matrix.p.getCol(v, 0)))
 
+        let trueAxisIndex = 0, angleOrientation = 1;
+        let convertor = ["x","y","z"];
+
+        for(let i = 0; i < v.length; i++){
+          trueAxisIndex += Math.abs(v[i]) * i;
+          angleOrientation = (v[i] < 0)? -1 : angleOrientation;
+        }
+        // console.log(convertor[trueAxisIndex]+ " " + angleOrientation);
+        return matrix.make.rotation(convertor[trueAxisIndex], angleOrientation * o);
       }
       return matrix.make.rotation(axis, o);
     },
@@ -500,8 +514,8 @@ var matrix = {
       try{
         let size = matrix.p.size(m);
         let n = matrix.make.empty(size.y, size.x);
-        for(let i = 0; i < size.y; i++){
-          for(let j = 0; j < size.x; j++){
+        for(let i = 0; i < size.x; i++){
+          for(let j = 0; j < size.y; j++){
             n[j][i] = m[i][j];
           }
         }
@@ -618,6 +632,11 @@ var matrix = {
     -JS-doc:
       ·optional parameters: @param {string} [somebody] - Somebody's name
 
+  -Rotation matrix
+    -errors
+    -JSDOC
     Y = arr[0].length
     X = arr.length
+
+    matrix.X = regex value to have it unified
   */
