@@ -125,9 +125,7 @@ var matrix = {
      * @param {number[][]} rMatrix - Current rotation matrix to select the equivalent axis.
      * @returns {number[][]} 3D rotation-matrix in order to rotate "o" radians from the "axis" axis.
      */
-    
-    
-     rotationOrigin(axis, o, rMatrix){
+    rotationOrigin(axis, o, rMatrix){
       if(rMatrix){ //conversor
         let v = [[0],[0],[0],[0]];
         switch(true){ //Make axis-vector
@@ -151,11 +149,6 @@ var matrix = {
       }
       return matrix.make.rotation(axis, o);
     },
-
-
-
-
-
     translation(x,y,z){
       try{
         if(typeof(x) != "number"){ //atempt to get x,y,z from a P5/diccionary
