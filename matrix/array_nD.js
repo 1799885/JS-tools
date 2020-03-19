@@ -45,7 +45,7 @@ array_nD = {
                 // dim = [arr.length].push(...dim);
             }
             else{
-                dim.unshif(arr.length);
+                dim.unshift(arr.length);
                 // dim = [arr.length].push(...dim);
             }
             return dim;
