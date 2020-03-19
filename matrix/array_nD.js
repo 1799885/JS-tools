@@ -24,8 +24,7 @@ array_nD = {
                     return matrix.make.copy(arrND); 
                 }
                 for(let i = 0; i < d.length; i++){
-                    console.log(i)
-                    arr.push(array_nD.make.copy(arr[i]));
+                    copy.push(array_nD.make.copy(arrND[i]));
                 }
                 return copy;
             }
@@ -40,13 +39,10 @@ array_nD = {
             let dim = [];
             if(Array.isArray(arr[0])){
                 dim.unshift(...array_nD.p.size(arr[0]));
-                // dim = [...array_nD.p.size(arr[0])].push(...dim);
                 dim.unshift(arr.length);
-                // dim = [arr.length].push(...dim);
             }
             else{
                 dim.unshift(arr.length);
-                // dim = [arr.length].push(...dim);
             }
             return dim;
         }
