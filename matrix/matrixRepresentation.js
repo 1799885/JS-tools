@@ -1,6 +1,9 @@
 function printMatrix_nD(m, delimeter, round){
     console.log(matrixToString(m, delimeter, round));
 }
+function printArray_nD(m, delimeter, round){
+    console.log(matrixToString(m, delimeter, round));
+}
 function matrixToString(m, delimeter, round){
     if(round == true){ //remove the "true" when jsdoc done
         let copy = matrix.make.copy(m);
