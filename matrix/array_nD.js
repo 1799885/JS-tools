@@ -16,16 +16,23 @@ array_nD = {
                 return null;
             }
         },
-        copy: function(m){
-            let c = [];
-            let dim = matrix.p.size(m);
-            for(i=0; i < dim.x; i++){
-                c.push([]);
-                for(j = 0; j < dim.y; j++){
-                    c[i][j] = m[i][j];
+        copy: function(arrND){
+            try{
+                let d = array_nD.p.size(arrND);
+                let copy = [];
+                if(d.length == 2){
+                    return matrix.make.copy(arrND); 
                 }
+                for(let i = 0; i < d.length; i++){
+                    console.log(i)
+                    arr.push(array_nD.make.copy(arr[i]));
+                }
+                return copy;
             }
-            return c;
+            catch(error){
+                console.log(error);
+                return null;
+            }
         }
     },
     p: {
@@ -33,10 +40,13 @@ array_nD = {
             let dim = [];
             if(Array.isArray(arr[0])){
                 dim.unshift(...array_nD.p.size(arr[0]));
+                // dim = [...array_nD.p.size(arr[0])].push(...dim);
                 dim.unshift(arr.length);
+                // dim = [arr.length].push(...dim);
             }
             else{
-                dim.unshift(arr.length);
+                dim.unshif(arr.length);
+                // dim = [arr.length].push(...dim);
             }
             return dim;
         }
