@@ -53,15 +53,16 @@ array_nD = {
                 // let copy = array_nD.make.copy(arr3D);
                 let cornersV = [
                     [0, 0],
-                    [0, 2],
-                    [2, 2],
                     [2, 0],
+                    [2, 2],
+                    [0, 2],
+                    
                 ];
                 let edgesV = [
                     [0, 1],
-                    [1, 2],
+                    [1, 0],
                     [2, 1],
-                    [1, 0]
+                    [1, 2]
                 ];
                 let slice = array_nD.o.get3DSlice(arr3D, axis, h);
                 let copy = matrix.make.empty(3,3);
@@ -72,19 +73,6 @@ array_nD = {
                 }
                 array_nD.o.set3DSlice(arr3D, axis, h, copy);
                 return copy;
-                // switch(true){
-                //     case vector.re.X.test(axis)://x = cte = h
-                        
-                //         // array_nD.o.set3DSlice(arr3D, "x", h, );
-                //         break;
-                //     case vector.re.Y.test(axis)://y = cte = h
-
-                //         break;
-                //     case vector.re.Z.test(axis)://z = cte = h
-
-                //         break;
-                // }
-
             }
             catch(error){
                 console.log(error);
