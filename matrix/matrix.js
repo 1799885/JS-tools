@@ -6,7 +6,7 @@
  * @property make - Dictionary with some functions to generate matrices.
  * @property p - Dictionary with some functions to get matrices' properties.
  * @property o - Dictionary with some functions to operate matrices.
- */
+*/
 var matrix = {
   /**
    * matrices generators.
