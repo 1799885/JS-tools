@@ -1,5 +1,4 @@
 /**
- * 
  * Matrix diccionary with multiple functionalities
  * 
  * @see X Row = arr.length
@@ -11,10 +10,15 @@
 var matrix = {
   /**
    * matrices generators.
-   * @property {function} identity - Indentity matrices
-   * @property {function} zero - Matrices filled with ceros
-   * @property {function} empty - Matrices filled with undefined values
-   * @property {function} copy - Copy of a matrix
+   * @property {function} identity - Indentity matrices.
+   * @property {function} zero - Matrices filled with ceros.
+   * @property {function} empty - Matrices filled with undefined values.
+   * @property {function} copy - Copy of a matrix.
+   * @property {function} rotation - Matrix to rotate around itself.
+   * @property {function} rotationOrigin - Matrix to rotate around the origin of coordinates.
+   * @property {function} translation - Matrix to translate in some direction.
+   * @property {function} scale - Matrix to scale by the axis-factors.
+   * @property {function} reflexion - Matrix to apply a reflexion around the selected axis.
    */
   make: { //2D square matrix
     /**
@@ -56,12 +60,8 @@ var matrix = {
      * @returns {undefined[][]} matrices filled with undefined values of order dimX-dimY.
      */
     empty: function(dimX, dimY){
-      dimY = (dimY)? dimY : dimX;  
-      let m = [];
-      for(let i = 0; i < dimX; i++){
-        m.push(new Array(dimY));
-      }
-      return m;
+      dimY = (dimY)? dimY : dimX; //if only one given, make it square
+      return array_nD.make.empty(dimX, dimY);
     },
     /**
      * Makes a copy of a matrix
@@ -71,7 +71,7 @@ var matrix = {
     copy: function(m){
       let c = [];
       let dim = matrix.p.size(m);
-      for(i=0; i < dim.x; i++){
+      for(i = 0; i < dim.x; i++){
           c.push([]);
           for(j = 0; j < dim.y; j++){
               c[i][j] = m[i][j];
@@ -149,6 +149,13 @@ var matrix = {
       }
       return matrix.make.rotation(axis, o);
     },
+    /**
+     * Generates translation matrices
+     * @param {number|P5Vector} x - The x coordinate or the P5Vector if given.
+     * @param {number} y - y coordinate. 
+     * @param {number} z - z coordinate.
+     * @returns {number[][]} 3D translation matrix to the input coordinates.
+     */
     translation(x,y,z){
       try{
         if(typeof(x) != "number"){ //atempt to get x,y,z from a P5/diccionary
@@ -167,6 +174,26 @@ var matrix = {
         return null;
       }
     },
+    /**
+     * Generates scale matrices.
+     * @param {number} sX - factor to scale on the X axis.
+     * @param {number} [sY=1] - factor to scale on the Y axis.
+     * @param {number} [sZ=1] - factor to scale on the Z axis.
+     * @returns {number[][]} 3D matrix to scale by the given inputs.
+     */
+    scale: function(sX, sY, sZ){
+      let m = matrix.make.identity(4);
+      let arr = [sX, (sY)? sY : 1, (sZ)? sZ : sZ];
+      for(let i = 0; i < 3; i++){
+        m[i][i] = arr[i];
+      }
+      return m;
+    },
+    /**
+     * (Not finish) Generates a reflexion matrix around the selected axis.
+     * @param {string} axis - Wanted axis. It needs to match the vector.re. expressions.
+     * @returns {number[][]} 3D matrix to apply a reflexion on the desired axis.
+     */
     reflexion(axis){
       let m = matrix.make.identity(4);
       switch(true){
@@ -193,16 +220,23 @@ var matrix = {
    * @property {function} getRow - Returns selected row.
    * @property {function} getCol - Returns selected col.
    * @property {function} subMatrix - Returns the sub-matrix.
+   * @property {function} applyRotation - Conversor to use this matrices with P5's applyMatrix().
    */
   p: {
     /**
      * Gives the size of the matrix as a P5-Vector.
-     * @param {any[][]} m - matrix
-     * @returns {Object} P5-Vector with the size of the matrix
+     * @param {any[][]} m - matrix.
+     * @param {boolean} arr - if the output should be an array or not (P5Vector).
+     * @returns {Object} P5-Vector with the size of the matrix.
      */
-    size: function(m){
+    size: function(m, arr){
       try{
-        return createVector(m.length, m[0].length);
+        if(arr == true){
+          return [m.length, m[0].length];
+        }
+        else{
+          return createVector(m.length, m[0].length);
+        }
       }
       catch(error){
         console.log(error);
@@ -211,8 +245,9 @@ var matrix = {
     },
     /**
      * Checks if same number of rows and cols.
-     * @param {any[][]} m - matrix
-     * @returns {boolean} if same number of rows and cols
+     * @param {any[][]} m - matrix.
+     * @returns {boolean} if same number of rows and cols.
+     * @throws not correct defined matrix.
      */
     isSquare: function(m){
       try{
@@ -321,8 +356,9 @@ var matrix = {
   o: {
     /**
      * Determinant of the given matrix (recursive).
-     * @param {number[][]} m - matrix
+     * @param {number[][]} m - matrix.
      * @returns {number} determinant of given matrix.
+     * @throws Not square matrix.
      */
     det: function(m){
       try{
@@ -331,7 +367,6 @@ var matrix = {
           throw "Not square matrix";
         }
         if(size.x == 2){
-          // console.log("det of: " + matrixToString(m, ",") +" is " + (m[0][0] * m[1][1] - m[0][1] * m[1][0]));
           return m[0][0] * m[1][1] - m[0][1] * m[1][0];
         }
         else{
@@ -339,9 +374,7 @@ var matrix = {
           let M = matrix.make.copy(m);
           M = matrix.o.removeRow(M, 0);
           let detValue = 0;
-          // console.log("Actual matrix: \n" + matrixToString(m, "\n"));
           for(let i = 0; i < size.x; i++){
-            // console.log("That means: " + row[i] + "* det(" + matrixToString(matrix.o.removeCol(M, i), ",") + ")")
             detValue += (Math.pow(-1, i)) * row[i] * matrix.o.det(matrix.o.removeCol(M, i));
           }
           return detValue;
@@ -377,9 +410,11 @@ var matrix = {
     },
     /**
      * Multiplication of two matrices.
+     * @see If a or b is not an array, it atempts the scalar product.
      * @param {number[][]} a - Matrix
      * @param {number[][]} b - Matrix
      * @return {number[][]} the result of "a * b". If any of them is a number, it will try the scalar function.
+     * @throws error if not same dimentions.
      */
     mult: function(a, b){
       try{ // a and b with same dimensions or matrix * scalar, else error
@@ -392,8 +427,6 @@ var matrix = {
         if(sizeA.y != sizeB.x){
           throw "not the same dimensions";
         }
-
-        //let range = sizeA.x;
         let m = matrix.make.empty(sizeA.x, sizeB.y);
         for(let i = 0; i < sizeB.y; i++){ //for each col in b
           for(let j = 0; j < sizeA.x; j++){ //for each row in a
@@ -414,7 +447,13 @@ var matrix = {
      * @return {number[][]} the result of "a - b".
      */
     sub: function(a, b){
-      return matrix.o.add(a, matrix.o.scalar(b, -1));
+      try{
+        return matrix.o.add(a, matrix.o.scalar(b, -1));
+      }
+      catch(error){
+        console.log(error);
+        return null;
+      }
     },
     /**
      * Matrix * number | number * Matrix.
@@ -427,7 +466,6 @@ var matrix = {
       try{
         let a = (Array.isArray(n))? n : o; //matrix
         let b = (Array.isArray(n))? o : n; //scalar
-
         let range = matrix.p.size(a).x;
         let m = matrix.make.zeroMatrix(range);
         for(let i = 0; i < range; i++){
@@ -443,11 +481,11 @@ var matrix = {
       }
     },
     /**
-     * Removes the selected row
-     * @param {any[][]} m - matrix
-     * @param {number} row - index of the row to remove
-     * @return {any[][]} New matrix without the row
-     */
+     * Removes the selected row.
+     * @param {any[][]} m - matrix.
+     * @param {number} row - index of the row to remove.
+     * @return {any[][]} New matrix without the selected row.
+    */
     removeRow: function(m, row){
       try{
         let size = matrix.p.size(m); 
@@ -511,7 +549,8 @@ var matrix = {
       }
     },
     /**
-     * Returns the inverted matrix
+     * Returns the inverted matrix using Gaussian Elimination.
+     * @see http://blog.acipo.com/matrix-inversion-in-javascript/
      * @param {number[][]} m - matrix
      * @returns {number[][]} Inverted matrix.
      * @throws error if not possible to invert or not square
@@ -526,22 +565,18 @@ var matrix = {
       // (a) Swap 2 rows
       // (b) Multiply a row by a scalar
       // (c) Add 2 rows
-      
       try{
         let dim = matrix.p.size(m);    
         //if the matrix isn't square: exit (error)
         if(!matrix.p.isSquare(m)){throw "Error, not same dimension";}
-
         dim = dim.x;//square mtrix => dim.x == dim.y
         //create the identity matrix (I), and a copy (C) of the original
         let I = matrix.o.transpose(matrix.make.identity(dim));
         let C = matrix.make.copy(m);
-
         // Perform elementary row operations
         for(let i = 0; i < dim; i++){
             // get the element e on the diagonal
             let e = C[i][i];
-            
             // if we have a 0 on the diagonal (we'll need to swap with a lower row)
             if(e == 0){
                 //look through every row below the i'th row
@@ -566,23 +601,19 @@ var matrix = {
                 //if it's still 0, not invertable (error)
                 if(e == 0){throw "Not possible to invert"}
             }
-            
             // Scale this row down by e (so we have a 1 on the diagonal)
             for(let j = 0; j < dim; j++){
                 C[i][j] = C[i][j]/e; //apply to original matrix
                 I[i][j] = I[i][j]/e; //apply to identity
             }
-            
             // Subtract this row (scaled appropriately for each row) from ALL of
             // the other rows so that there will be 0's in this column in the
             // rows above and below this one
             for(let ii = 0; ii < dim; ii++){
                 // Only apply to other rows (we want a 1 on the diagonal)
                 if(ii == i){continue;}
-                
                 // We want to change this element to 0
                 e = C[ii][i];
-                
                 // Subtract (the row above(or below) scaled by e) from (the
                 // current row) but start at the i'th column and assume all the
                 // stuff left of diagonal is 0 (which it should be if we made this
@@ -593,7 +624,6 @@ var matrix = {
                 }
             }
         }
-        
         //we've done all operations, C should be the identity
         //matrix I should be the inverse:
         return I;
