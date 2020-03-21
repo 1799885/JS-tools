@@ -99,6 +99,12 @@ var vector = {
     }
 
   },
+
+  /**
+   * Regex dicionary to store some expressions related to the axis + conversor.
+   * @property {regex} regex expresions to test if string refer to axis of R³.
+   * @property {string[]} conversor index to axis (0 = "x", 1 = "y" and 2 = "z").
+   */
   re: {
     X: /[xXi0]/,
     Y: /[yYj1]/,
@@ -106,7 +112,10 @@ var vector = {
     conversor: ["x","y","z"]
   }
 }
-  
+
+/**
+ * Dictionary with the keyCodes of some keys of the keyboard.
+ */
 var keyCodes = {
   85: "U",
   68: "D",
