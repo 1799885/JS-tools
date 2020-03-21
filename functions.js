@@ -1,4 +1,16 @@
+/**
+ * Vector diccionary with some funcionalities:
+ * @property {function} arrSum - Returns the sum of the elements of the array. 
+ * @property {function} escalar - Returns the result of applying the scalar operation between 2 vectors.
+ * @property {function} toVector - Transforms a row or col vector (matrix) to a array/vector. 
+ * @property {diccionary} re - Diccionary with some regex expressions related to vectors.
+ */
 var vector = {
+  /**
+   * Returns the sum of the elements of the array.
+   * @param {number[]} arr - Array to do the sum.
+   * @returns {number} the result of this operation.
+   */
   arrSum: function(arr){ //[1,3,3] -> 7
     try{
       return arr.reduce(function(a,b){
@@ -10,6 +22,12 @@ var vector = {
       return null;
     }
   },
+  /**
+   * Returns the result of applying the scalar product between two vectors.
+   * @param {number[]} u - First array / P5Vector / Diccionary({x: 0, y: 0, z:0}).
+   * @param {number[]} v - Second array / P5Vector / Diccionary({x: 0, y: 0, z:0}).
+   * @returns {number} the result of this operation.
+   */
   escalar: function(u, v){
     try{
       let e = 0;
@@ -23,25 +41,29 @@ var vector = {
       return null;
     }
   },
-  toVector: function(m, round){ //col vector or row vector to true vector;
+  /**
+   * Transforms a row or col vector (matrix) to a array / vector.
+   * @param {any[][]} m - matrix / array[array[any]].
+   * @param {string} [type] - The type of desired output. 
+   * @param {boolean} [round] - If the elements should be rounded.
+   */
+  toVector: function(m, round, type){ //col vector or row vector to true vector;
     try{
+      let v = [];
       if(!round){
         if(m.length == 1){//row vector
           return m[0];
         }
         else if(m[0].length == 1){//col vector
-          let v = [];
           for(let i = 0; i < m.length; i++){
             v.push(m[i][0]);
           }
-          return v;
         }
         else{
           throw "Not correct dimensions to transform into a Vector/Array";
         }
       }
       else{
-        let v = [];
         if(m.length == 1){//row vector
           for(let i = 0; i < m[0].length; i++){
             v.push(Math.round(m[0][i]));
@@ -55,8 +77,21 @@ var vector = {
         else{
           throw "Not correct dimensions to transform into a Vector/Array";
         }
-        return v;
       }
+      if(type){
+        switch(true){
+          case /[aA]rr(ay)?/.test(type):
+            break;
+          case /[dD]ict(ionary)?/.test(type):
+            return {x: v[0], y: v[1], z: v[2]};
+          case /[pP]5([Vv]ector)?/.test(type):
+            return createVector(v[0], v[1], v[2]);
+          case true:
+            console.log("Not correct type");
+            return v;
+        }
+      }
+      return v;
     }
     catch(error){
       console.log(error);
@@ -72,19 +107,11 @@ var vector = {
   }
 }
   
-function keyPressed() {
-  switch(keyCode){
-    case 85:
-      rubik.m("U");
-      break;
-    case 68:
-      rubik.m("D");
-      break;
-    case 82:
-      rubik.m("R");
-      break;
-    case 76:
-      rubik.m("L");
-      break;
-  }
-}
+var keyCodes = {
+  85: "U",
+  68: "D",
+  82: "R",
+  76: "L",
+  66: "B",
+  70: "F"
+};
