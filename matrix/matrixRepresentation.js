@@ -29,7 +29,7 @@ function array_nDToString(m, delimeter, round){
             }
         }
         m = copy;
-        return matrixToString(copy, delimeter);
+        return array_nDToString(copy, delimeter);
     }
     else{
         let d, end = "";
@@ -39,7 +39,7 @@ function array_nDToString(m, delimeter, round){
                 if(Array.isArray(m[i][0])){
                     end = "\n";
                 }
-                str += matrixToString(m[i], delimeter);
+                str += array_nDToString(m[i], delimeter);
                 d = (delimeter)? delimeter : "\n";
             }
             else{
