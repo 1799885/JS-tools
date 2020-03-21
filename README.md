@@ -33,26 +33,26 @@ Some files with the documentation used to develop files in this directory. Full 
 This file contains a dictionary with a collection of functions that allow us to create, handle and operate matrices.
 These functions are divided in:
 
-##### -make:
+**-make:**
 Collections of functions to generate matrices:
-  **·identity:** Indentity matrices.
-  **·zero:** Matrices filled with ceros.
-  **·empty:** Matrices filled with undefined values.
-  **·copy:** Copy of a matrix.
-  **·rotation:** Matrix to rotate around itself.
-  **·rotationOrigin:** Matrix to rotate around the origin of coordinates.
-  **·translation:** Matrix to translate in some direction.
-  **·scale:** Matrix to scale by the axis-factors.
-  **·reflexion:** Matrix to apply a reflexion around the selected axis.
+   #### identity: Indentity matrices.
+   #### zero: Matrices filled with ceros.
+   #### empty: Matrices filled with undefined values.
+   #### copy: Copy of a matrix.
+   #### rotation: Matrix to rotate around itself.
+   #### rotationOrigin: Matrix to rotate around the origin of coordinates.
+   #### translation: Matrix to translate in some direction.
+   #### scale: Matrix to scale by the axis-factors.
+   #### reflexion: Matrix to apply a reflexion around the selected axis.
 
 ##### -p or properties:
 Collections of functions to see the properties matrices.
-  **·size:** Size of the matrix.
-  **·isSquare:** Checks if square matrix.
-  **·getRow:** Returns selected row.
-  **·getCol:** Returns selected col.
-  **·subMatrix:** Returns the sub-matrix.
-  **·applyRotation:** Conversor to use this matrices with P5's applyMatrix().
+   #### size: Size of the matrix.
+   #### isSquare: Checks if square matrix.
+   #### getRow: Returns selected row.
+   #### getCol: Returns selected col.
+   #### subMatrix: Returns the sub-matrix.
+   #### applyRotation: Conversor to use this matrices with P5's applyMatrix().
 
 ##### -o or operate:
 
