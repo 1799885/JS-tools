@@ -4,7 +4,11 @@ array_nD = {
             try{
                 let arr = [];
                 if(dims.length == 2){
-                    return matrix.make.empty(dims[0], dims[1]);
+                    let arr = [];
+                    for(let i = 0; i < dims[0]; i++){
+                        arr.push(new Array(dims[1]));
+                    }
+                    return arr;
                 }
                 for(let i = 0; i < dims[0]; i++){
                     arr.push(array_nD.make.empty(...dims.slice(1)));
@@ -56,7 +60,6 @@ array_nD = {
                     [2, 0],
                     [2, 2],
                     [0, 2],
-                    
                 ];
                 let edgesV = [
                     [0, 1],
@@ -105,7 +108,6 @@ array_nD = {
                         }
                         break;
                 }
-                // printMatrix_nD(m);
                 return m;
             }
             catch(error){
@@ -138,7 +140,6 @@ array_nD = {
                         }
                         break;
                 }
-                // printMatrix_nD(arr3D);
                 return arr3D;
             }
             catch(error){
