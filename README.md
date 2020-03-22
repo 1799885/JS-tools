@@ -75,17 +75,31 @@ Collections of functions to see the properties matrices.
 Collection of function to operate with matrices.
 
    *det:* Determinant (recursive method).
+   
    *add:* Addition.
+   
    *mult:* Multiplication.
+   
    *sub:* Substraction.
+   
    *scalar:* Matrix * number operation.
+   
    *removeRow:* Remove selected row.
+   
    *removeCol:* Remove selected col.
+   
    *transpose:* Transposed matrix.
+   
    *inverse:* Inversed matrix (Guassian Elimination method).
 
 
 #### Array_nD:
-#### MatrixRepresentation:
 
-#### :
+#### MatrixRepresentation:
+File with the logic to easily print on console a matrix. Check JSDOC to see how to customize the output of this functions.
+
+   *printArray_nD:* Function that prints the result of running the function *array_nDToString*.
+   
+   *printMatrix_nD:* Different way to call *printArray_nD*.
+   
+   *array_nDToString:* Way to get the toString() method of a array of (arrays of...) of order n.
