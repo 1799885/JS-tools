@@ -103,17 +103,20 @@ var matrix = {
           return null;
       }
       let m = matrix.make.zero(4);
-      m[0][0] = v.x * v.x + (1 - v.x * v.x) * Math.cos(o);
-      m[1][0] = v.x * v.y * (1 - Math.cos(o)) - v.z * Math.sin(o);
-      m[2][0] = v.x * v.z * (1 - Math.cos(o)) + v.y * Math.sin(o);
+      let c = Math.cos(o);
+      let s = Math.sin(o);
       
-      m[0][1] = v.x * v.y * (1 - Math.cos(o)) + v.z * Math.sin(o);
-      m[1][1] = v.y * v.y + (1 - v.y * v.y) * Math.cos(o);
-      m[2][1] = v.y * v.z * (1 - Math.cos(o)) - v.x * Math.sin(o);
+      m[0][0] = v.x * v.x + (1 - v.x * v.x) * c;
+      m[1][0] = v.x * v.y * (1 - c) - v.z * s;
+      m[2][0] = v.x * v.z * (1 - c) + v.y * s;
       
-      m[0][2] = v.x * v.z * (1 - Math.cos(o)) - v.y * Math.sin(o);
-      m[1][2] = v.y * v.z * (1 - Math.cos(o)) + v.x * Math.sin(o);
-      m[2][2] = v.z * v.z + (1 - v.z * v.z) * Math.cos(o);
+      m[0][1] = v.x * v.y * (1 - c) + v.z * s;
+      m[1][1] = v.y * v.y + (1 - v.y * v.y) * c;
+      m[2][1] = v.y * v.z * (1 - c) - v.x * s;
+      
+      m[0][2] = v.x * v.z * (1 - c) - v.y * s;
+      m[1][2] = v.y * v.z * (1 - c) + v.x * s;
+      m[2][2] = v.z * v.z + (1 - v.z * v.z) * c;
       
       m[3][3] = 1;
       return m;
