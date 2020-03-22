@@ -104,3 +104,19 @@ File with the logic to easily print on console a matrix. Check JSDOC to see how 
     *printMatrix_nD:* Different way to call *printArray_nD*.
    
     *array_nDToString:* Way to get the toString() method of a array of (arrays of...) of order n.
+
+
+
+### functions.js:
+File with some functionalities:
+
+#### Vector:
+Diccionary with some functions to work with arrays as Vectors (Compatible with P5Vectors and special diccionaries. Check JSDOC).
+
+    *arrSum:* Returns the sum of the elements of the array.
+    *escalar:* Returns the result of applying the scalar product between two vectors.
+    *toVector:* Transforms a row or col vector (matrix) to a array / vector.
+    *re:* Regex dicionary to store some expressions related to the axis + conversor.
+
+#### keyCodes:
+Dictionary with the keyCodes of some keys of the keyboard. 
