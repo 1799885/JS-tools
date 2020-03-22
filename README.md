@@ -55,7 +55,7 @@ Collections of functions to generate matrices:
     *reflexion:* Matrix to apply a reflexion around the selected axis.
 
 
-##### p or properties:
+##### p - properties:
 Collections of functions to see the properties matrices.
 
     *size:* Size of the matrix.
@@ -71,7 +71,7 @@ Collections of functions to see the properties matrices.
     *applyRotation:* Conversor to use this matrices with P5's applyMatrix().
 
 
-##### o or operate:
+##### o - operate:
 Collection of function to operate with matrices.
 
     *det:* Determinant (recursive method).
@@ -94,6 +94,7 @@ Collection of function to operate with matrices.
 
 
 #### Array_nD:
+(Currently working on this)
 
 #### MatrixRepresentation:
 File with the logic to easily print on console a matrix. Check JSDOC to see how to customize the output of this functions.
