@@ -82,6 +82,41 @@ array_nD = {
                 return null;
             }
         },
+        permutation_3DV2: function(arr3D, axis, h){
+            try{
+                // console.log("Enter permutation_3DV2");
+                // printArray_nD(arr3D);
+                let cornersV = [
+                    [0, 0],
+                    [2, 0],
+                    [2, 2],
+                    [0, 2]
+                ];
+                let edgesV = [
+                    [1, 0],
+                    [2, 1],
+                    [1, 2],
+                    [0, 1]
+                ];
+                let slice = array_nD.o.get3DSlice(arr3D, axis, h);
+                // console.log("slice made");
+                // printArray_nD(slice);
+                let copy = matrix.make.empty(3,3);
+                copy[1][1] = slice[1][1]; //center
+                for(let i = 0, j = 1; i < 4; i++, j = (j + 1) % 4){
+                    copy[cornersV[j][0]][cornersV[j][1]] = slice[cornersV[i][0]][cornersV[i][1]];
+                    copy[edgesV[j][0]][edgesV[j][1]] = slice[edgesV[i][0]][edgesV[i][1]];
+                }
+                // console.log("copy made");
+                // printArray_nD(copy);
+                array_nD.o.set3DSlice(arr3D, axis, h, copy);
+                return copy;
+            }
+            catch(error){
+                console.log(error);
+                return null;
+            }
+        },
         get3DSlice: function(arr3D, axis, h){
             try{
                 let m = matrix.make.empty(3,3);
