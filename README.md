@@ -36,61 +36,61 @@ These functions are divided in:
 ##### make:
 Collections of functions to generate matrices:
 
-   *identity:* Indentity matrices.
+    *identity:* Indentity matrices.
 
-   *zero:* Matrices filled with ceros.
+    *zero:* Matrices filled with ceros.
 
-   *empty:* Matrices filled with undefined values.
+    *empty:* Matrices filled with undefined values.
 
-   *copy:* Copy of a matrix.
+    *copy:* Copy of a matrix.
 
-   *rotation:* Matrix to rotate around itself.
+    *rotation:* Matrix to rotate around itself.
 
-   *rotationOrigin:* Matrix to rotate around the origin of coordinates.
+    *rotationOrigin:* Matrix to rotate around the origin of coordinates.
 
-   *translation:* Matrix to translate in some direction.
+    *translation:* Matrix to translate in some direction.
 
-   *scale:* Matrix to scale by the axis-factors.
+    *scale:* Matrix to scale by the axis-factors.
 
-   *reflexion:* Matrix to apply a reflexion around the selected axis.
+    *reflexion:* Matrix to apply a reflexion around the selected axis.
 
 
 ##### p or properties:
 Collections of functions to see the properties matrices.
 
-   *size:* Size of the matrix.
+    *size:* Size of the matrix.
 
-   *isSquare:* Checks if square matrix.
+    *isSquare:* Checks if square matrix.
 
-   *getRow:* Returns selected row.
+    *getRow:* Returns selected row.
 
-   *getCol:* Returns selected col.
+    *getCol:* Returns selected col.
 
-   *subMatrix:* Returns the sub-matrix.
+    *subMatrix:* Returns the sub-matrix.
 
-   *applyRotation:* Conversor to use this matrices with P5's applyMatrix().
+    *applyRotation:* Conversor to use this matrices with P5's applyMatrix().
 
 
 ##### o or operate:
 Collection of function to operate with matrices.
 
-   *det:* Determinant (recursive method).
+    *det:* Determinant (recursive method).
    
-   *add:* Addition.
+    *add:* Addition.
    
-   *mult:* Multiplication.
+    *mult:* Multiplication.
    
-   *sub:* Substraction.
+    *sub:* Substraction.
    
-   *scalar:* Matrix * number operation.
+    *scalar:* Matrix * number operation.
    
-   *removeRow:* Remove selected row.
+    *removeRow:* Remove selected row.
    
-   *removeCol:* Remove selected col.
+    *removeCol:* Remove selected col.
    
-   *transpose:* Transposed matrix.
+    *transpose:* Transposed matrix.
    
-   *inverse:* Inversed matrix (Guassian Elimination method).
+    *inverse:* Inversed matrix (Guassian Elimination method).
 
 
 #### Array_nD:
@@ -98,8 +98,8 @@ Collection of function to operate with matrices.
 #### MatrixRepresentation:
 File with the logic to easily print on console a matrix. Check JSDOC to see how to customize the output of this functions.
 
-   *printArray_nD:* Function that prints the result of running the function *array_nDToString*.
+    *printArray_nD:* Function that prints the result of running the function *array_nDToString*.
    
-   *printMatrix_nD:* Different way to call *printArray_nD*.
+    *printMatrix_nD:* Different way to call *printArray_nD*.
    
-   *array_nDToString:* Way to get the toString() method of a array of (arrays of...) of order n.
+    *array_nDToString:* Way to get the toString() method of a array of (arrays of...) of order n.
