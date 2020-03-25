@@ -43,7 +43,7 @@ function array_nDToString(m, delimeter, round){
                 d = (delimeter)? delimeter : "\n";
             }
             else{
-                str += m[i];
+                str += (typeof(m[i]) == "object")? m[i].constructor.name : m[i];
                 d = ",";
             }
             str += ((i + 1 < m.length) ?  d + " " : "") + end;
