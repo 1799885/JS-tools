@@ -54,38 +54,6 @@ array_nD = {
     o: {
         permutation_3D: function(arr3D, axis, h){
             try{
-                // let copy = array_nD.make.copy(arr3D);
-                let cornersV = [
-                    [0, 0],
-                    [2, 0],
-                    [2, 2],
-                    [0, 2],
-                ];
-                let edgesV = [
-                    [0, 1],
-                    [1, 0],
-                    [2, 1],
-                    [1, 2]
-                ];
-                let slice = array_nD.o.get3DSlice(arr3D, axis, h);
-                let copy = matrix.make.empty(3,3);
-                copy[1][1] = slice[1][1]; //center
-                for(let i = 0, j = 1; i < 4; i++, j = (j + 1) % 4){
-                    copy[cornersV[i][0]][cornersV[i][1]] = slice[cornersV[j][0]][cornersV[j][1]];
-                    copy[edgesV[i][0]][edgesV[i][1]] = slice[edgesV[j][0]][edgesV[j][1]];
-                }
-                array_nD.o.set3DSlice(arr3D, axis, h, copy);
-                return copy;
-            }
-            catch(error){
-                console.log(error);
-                return null;
-            }
-        },
-        permutation_3DV2: function(arr3D, axis, h){
-            try{
-                // console.log("Enter permutation_3DV2");
-                // printArray_nD(arr3D);
                 let cornersV = [
                     [0, 0],
                     [2, 0],
@@ -99,16 +67,12 @@ array_nD = {
                     [0, 1]
                 ];
                 let slice = array_nD.o.get3DSlice(arr3D, axis, h);
-                // console.log("slice made");
-                // printArray_nD(slice);
                 let copy = matrix.make.empty(3,3);
                 copy[1][1] = slice[1][1]; //center
                 for(let i = 0, j = 1; i < 4; i++, j = (j + 1) % 4){
                     copy[cornersV[j][0]][cornersV[j][1]] = slice[cornersV[i][0]][cornersV[i][1]];
                     copy[edgesV[j][0]][edgesV[j][1]] = slice[edgesV[i][0]][edgesV[i][1]];
                 }
-                // console.log("copy made");
-                // printArray_nD(copy);
                 array_nD.o.set3DSlice(arr3D, axis, h, copy);
                 return copy;
             }
