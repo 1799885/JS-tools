@@ -88,10 +88,18 @@ array_nD = {
      * Dictionary to operate with type of arrays
      * @see Some functions are made for 3D arrays. Check the JSDOC to see if compatible.
      * @property {function} permutation_3D - Enables to rotate the elements of the 3D array in any direction.
-     * @property {function}
-     * @property {function}
+     * @property {function} get3DSlice - Returns the selected slice from the array.
+     * @property {function} set3DSlice - Overwrites the selected slice of the array with the given slice.
      */
     o: {
+        /**
+         * Enables to rotate the elements of the 3D array in any direction.
+         * @param {any[][]} arr3D - nD array with all the elements.
+         * @param {string} axis - string denoting the axis of rotation. It must match vector.re.AXIS regex expressions in order to work.
+         * @param {number} h - (0 based) the height of the rotation (if axis = "x" and h = 1, rotate on the X axis the second layer). 
+         * @returns {any[][]} 2D array with the rotated slice.
+         * @see due to the nature of JavaScript, this function makes 2 acctions: return the rotated slice and the native arr3D modified with this rotation.
+         */
         permutation_3D: function(arr3D, axis, h){
             try{
                 let cornersV = [
@@ -121,6 +129,13 @@ array_nD = {
                 return null;
             }
         },
+        /**
+         * Returns the selected slice from the array.
+         * @param {any[][]} arr3D - nD array with all the elements.
+         * @param {string} axis - string denoting the axis of rotation. It must match vector.re.AXIS regex expressions in order to work.
+         * @param {number} h - (0 based) the height of the rotation (if axis = "x" and h = 1, get the X axis the second layer).
+         * @returns {any[][]} 2D array with the array.
+        */
         get3DSlice: function(arr3D, axis, h){
             try{
                 let m = matrix.make.empty(3,3);
@@ -154,6 +169,14 @@ array_nD = {
                 return null;
             }
         },
+        /**
+         * Overwrites the selected slice of the array with the given slice.
+         * @param {any[][]} arr3D - nD array with all the elements.
+         * @param {string} axis - string denoting the axis of rotation. It must match vector.re.AXIS regex expressions in order to work.
+         * @param {number} h - (0 based) the height of the rotation (if axis = "x" and h = 1, get the X axis the second layer).
+         * @param {any[][]} slice - 2D array with the sliced slice.
+         * @returns {any[][]} The new array with the modified slice.
+         */
         set3DSlice: function(arr3D, axis, h, slice){
             try{
                 switch(true){
