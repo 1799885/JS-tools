@@ -1,5 +1,23 @@
+/**
+ * Diccionary with some funcionalities to work with array[array[...]] of order n.
+ * 
+ * @see Some functions here are designed for a 3D array, so check the functions' names.
+ * @property make - Diccionary to generate this type of arrays.
+ * @property p - Dicctionary to get properties of this arrays.
+ * @property o - Diccionary to operate with this arrays.
+ */
 array_nD = {
+    /**
+     * Dictionary to generate nD arrays.
+     * @property {function} empty - Generate empty array of the given dimensions.
+     * @property {function} copy - Makes a copy of the given array.
+     */
     make: {
+        /**
+         * Generate empty array of the given dimensions
+         * @param  {...number} dims - Dimensions of the desired array
+         * @returns {any[][]} A array with the dimensions selected and undefined value on every cell.
+         */
         empty: function(...dims){
             try{
                 let arr = [];
@@ -20,6 +38,11 @@ array_nD = {
                 return null;
             }
         },
+        /**
+         * Makes a copy of the given array.
+         * @param {any[][]} arrND - Desired nD array.
+         * @returns {any[][]} Copy of the selected array.
+         */
         copy: function(arrND){
             try{
                 let d = array_nD.p.size(arrND);
@@ -38,7 +61,17 @@ array_nD = {
             }
         }
     },
+    /**
+     * Dicctionary to get properties of this arrays.
+     * @property {function} size - Returns a 1D array with the dimensions of the given nD array. 
+     */
     p: {
+        /**
+         * Returns a 1D array with the dimensions of the given nD array.
+         * @param {any[][]} arr - nD array.
+         * @returns {number[]} The array with the dimensions
+         * @see array_nD.p.size(arr[2][3][5]) --> [2, 3, 5];
+         */
         size: function(arr){
             let dim = [];
             if(Array.isArray(arr[0])){
@@ -51,6 +84,13 @@ array_nD = {
             return dim;
         }
     },
+    /**
+     * Dictionary to operate with type of arrays
+     * @see Some functions are made for 3D arrays. Check the JSDOC to see if compatible.
+     * @property {function} permutation_3D - Enables to rotate the elements of the 3D array in any direction.
+     * @property {function}
+     * @property {function}
+     */
     o: {
         permutation_3D: function(arr3D, axis, h){
             try{
