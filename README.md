@@ -72,7 +72,7 @@ Collections of functions to see the properties matrices.
 
 
 ##### o - operate:
-Collection of function to operate with matrices.
+Collection of functions to operate with matrices.
 
     *det:* Determinant (recursive method).
    
@@ -94,7 +94,31 @@ Collection of function to operate with matrices.
 
 
 #### Array_nD:
-(Currently working on this)
+Diccionary with some funcionalities to work with nD arrays. This collection of functions is dividided in:
+
+##### make:
+Diccionary to generate this type of arrays.
+
+    *empty:* Generate empty array of the given dimensions.
+
+    *copy:* Makes a copy of the given array.
+
+
+##### p - properties:
+Dicctionary to get properties of this arrays.
+
+    *size:* Returns a 1D array with the dimensions of the given nD array. 
+
+
+##### o - operate:
+Diccionary to operate with this arrays.
+
+    *permutation_3D:* Enables to rotate the elements of the 3D array in any direction.
+
+    *get3DSlice:* Returns the selected slice from the array.
+
+    *set3DSlice:* Overwrites the selected slice of the array with the given slice.
+
 
 #### MatrixRepresentation:
 File with the logic to easily print on console a matrix. Check JSDOC to see how to customize the output of this functions.

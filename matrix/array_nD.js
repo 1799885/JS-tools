@@ -1,5 +1,5 @@
 /**
- * Diccionary with some funcionalities to work with array[array[...]] of order n.
+ * Diccionary with some funcionalities to work with nD arrays.
  * 
  * @see Some functions here are designed for a 3D array, so check the functions' names.
  * @property make - Diccionary to generate this type of arrays.
