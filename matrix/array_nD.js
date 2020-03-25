@@ -61,10 +61,10 @@ array_nD = {
                     [0, 2]
                 ];
                 let edgesV = [
+                    [0, 1],
                     [1, 0],
                     [2, 1],
                     [1, 2],
-                    [0, 1]
                 ];
                 let slice = array_nD.o.get3DSlice(arr3D, axis, h);
                 let copy = matrix.make.empty(3,3);
@@ -95,7 +95,7 @@ array_nD = {
                     case vector.re.Y.test(axis)://y = cte = h
                         for(let i = 0; i < 3; i++){
                             for(let k = 0; k < 3; k++){
-                                m[i][k] = arr3D[i][h][k];
+                                m[i][k] = arr3D[k][h][i];
                             }
                         }
                         break;
@@ -127,7 +127,7 @@ array_nD = {
                     case vector.re.Y.test(axis)://y = cte = h
                         for(let i = 0; i < 3; i++){
                             for(let k = 0; k < 3; k++){
-                                arr3D[i][h][k] = slice[i][k];
+                                arr3D[i][h][k] = slice[k][i];
                             }
                         }
                         break;
