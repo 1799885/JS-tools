@@ -131,32 +131,36 @@ array_nD = {
         },
         /**
          * Returns the selected slice from the array.
-         * @param {any[][]} arr3D - nD array with all the elements.
+         * @param {any[][]} arr3D - nD array with all the elements. It does not need to be squared.
          * @param {string} axis - string denoting the axis of rotation. It must match vector.re.AXIS regex expressions in order to work.
          * @param {number} h - (0 based) the height of the rotation (if axis = "x" and h = 1, get the X axis the second layer).
          * @returns {any[][]} 2D array with the array.
         */
         get3DSlice: function(arr3D, axis, h){
             try{
-                let m = matrix.make.empty(3,3);
+                let size = array_nD.p.size(arr3D);
+                let m;
                 switch(true){
-                    case vector.re.X.test(axis)://x = cte = h
-                        for(let j = 0; j < 3; j++){
-                            for(let k = 0; k < 3; k++){
+                    case vector.re.X.test(axis)://x = cte = h 
+                        m = matrix.make.empty(size[1], size[2]);
+                        for(let j = 0; j < size[1]; j++){
+                            for(let k = 0; k < size[2]; k++){
                                 m[j][k] = arr3D[h][j][k];
                             }
                         }
                         break;
                     case vector.re.Y.test(axis)://y = cte = h
-                        for(let i = 0; i < 3; i++){
-                            for(let k = 0; k < 3; k++){
+                        m = matrix.make.empty(size[0], size[2]);
+                        for(let i = 0; i < size[0]; i++){
+                            for(let k = 0; k < size[2]; k++){
                                 m[i][k] = arr3D[k][h][i];
                             }
                         }
                         break;
                     case vector.re.Z.test(axis)://z = cte = h
-                        for(let i = 0; i < 3; i++){
-                            for(let j = 0; j < 3; j++){
+                        m = matrix.make.empty(size[0], size[1]);
+                        for(let i = 0; i < size[0]; i++){
+                            for(let j = 0; j < size[1]; j++){
                                 m[i][j] = arr3D[i][j][h];
                             }
                         }
@@ -179,24 +183,25 @@ array_nD = {
          */
         set3DSlice: function(arr3D, axis, h, slice){
             try{
+                let size = array_nD.p.size(arr3D);
                 switch(true){
                     case vector.re.X.test(axis)://x = cte = h
-                        for(let j = 0; j < 3; j++){
-                            for(let k = 0; k < 3; k++){
+                        for(let j = 0; j < size[1]; j++){
+                            for(let k = 0; k < size[2]; k++){
                                 arr3D[h][j][k] = slice[j][k];
                             }
                         }
                         break;
                     case vector.re.Y.test(axis)://y = cte = h
-                        for(let i = 0; i < 3; i++){
-                            for(let k = 0; k < 3; k++){
+                        for(let i = 0; i < size[0]; i++){
+                            for(let k = 0; k < size[2]; k++){
                                 arr3D[i][h][k] = slice[k][i];
                             }
                         }
                         break;
                     case vector.re.Z.test(axis)://z = cte = h
-                        for(let i = 0; i < 3; i++){
-                            for(let j = 0; j < 3; j++){
+                        for(let i = 0; i < size[0]; i++){
+                            for(let j = 0; j < size[1]; j++){
                                 arr3D[i][j][h] = slice[i][j];
                             }
                         }
