@@ -94,35 +94,27 @@ array_nD = {
     o: {
         /**
          * Enables to rotate the elements of the 3D array in any direction.
-         * @param {any[][]} arr3D - nD array with all the elements.
+         * @param {any[][]} arr3D - 3D array with all the elements (The length of this array could be any).
          * @param {string} axis - string denoting the axis of rotation. It must match vector.re.AXIS regex expressions in order to work.
          * @param {number} h - (0 based) the height of the rotation (if axis = "x" and h = 1, rotate on the X axis the second layer). 
          * @returns {any[][]} 2D array with the rotated slice.
          * @see due to the nature of JavaScript, this function makes 2 acctions: return the rotated slice and the native arr3D modified with this rotation.
+         * @see This function is based on http://jsfiddle.net/FloydPink/0fg4rLf9/.
          */
         permutation_3D: function(arr3D, axis, h){
             try{
-                let cornersV = [
-                    [0, 0],
-                    [2, 0],
-                    [2, 2],
-                    [0, 2]
-                ];
-                let edgesV = [
-                    [0, 1],
-                    [1, 0],
-                    [2, 1],
-                    [1, 2],
-                ];
-                let slice = array_nD.o.get3DSlice(arr3D, axis, h);
-                let copy = matrix.make.empty(3,3);
-                copy[1][1] = slice[1][1]; //center
-                for(let i = 0, j = 1; i < 4; i++, j = (j + 1) % 4){
-                    copy[cornersV[j][0]][cornersV[j][1]] = slice[cornersV[i][0]][cornersV[i][1]];
-                    copy[edgesV[j][0]][edgesV[j][1]] = slice[edgesV[i][0]][edgesV[i][1]];
+                // reverse the individual rows
+                let m = array_nD.o.get3DSlice(arr3D, axis, h);
+                m = m.map(function(row) { return row.reverse();});
+                for (var i = 0; i < m.length; i++) { //Swap the symmetric elements
+                    for (let j = 0; j < i; j++) {
+                        let temp = m[i][j];
+                        m[i][j] = m[j][i];
+                        m[j][i] = temp;
+                    }
                 }
-                array_nD.o.set3DSlice(arr3D, axis, h, copy);
-                return copy;
+                array_nD.o.set3DSlice(arr3D, axis, h, m);
+                return m;
             }
             catch(error){
                 console.log(error);
