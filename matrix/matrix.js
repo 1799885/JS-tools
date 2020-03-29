@@ -87,7 +87,7 @@ var matrix = {
      */
     rotation(axis, o){//4D matrix
       o = -o;
-      let v = createVector(0, 0, 0);
+      let v = new p5.Vector(0, 0, 0);
       switch(true){
         case vector.re.X.test(axis):
           v.x = 1;
@@ -238,12 +238,12 @@ var matrix = {
           return [m.length, m[0].length];
         }
         else{
-          return createVector(m.length, m[0].length);
+          return new p5.Vector(m.length, m[0].length);
         }
       }
       catch(error){
         console.log(error);
-        return createVector(undefined, undefined);
+        return new p5.Vector(undefined, undefined);
       }
     },
     /**

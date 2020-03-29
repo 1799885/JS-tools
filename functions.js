@@ -85,7 +85,7 @@ var vector = {
           case /[dD]ict(ionary)?/.test(type):
             return {x: v[0], y: v[1], z: v[2]};
           case /[pP]5([Vv]ector)?/.test(type):
-            return createVector(v[0], v[1], v[2]);
+            return new p5.Vector(v[0], v[1], v[2]);
           case true:
             console.log("Not correct type");
             return v;
