@@ -34,6 +34,33 @@ var vector = {
     }
   },
   /**
+   * Makes the multiplication of the elements of the arrays.
+   * @param {number[]} arr1 - 1º array
+   * @param {number[]} arr2 - 2º array
+   * @returns new array with the sum of the given arrays
+   */
+  multiplication: function(arr1, arr2){
+    try{
+      if(!Array.isArray(arr1) || !Array.isArray(arr2)){
+        throw "arguments are not arrays";
+      }
+      else if(arr1.length != arr2.length){
+        throw "Not same lenght";
+      }
+      else{
+        let arr = new Array(arr1.length);
+        for(let i = 0; i < arr1.length; i++){
+          arr[i] = arr1[i] * arr2[i];
+        }
+        return arr;
+      }
+    }
+    catch(error){
+      console.log(error);
+      return null;
+    }
+  },
+  /**
    * Returns the sum of the elements of the array.
    * @param {number[]} arr - Array to do the sum.
    * @returns {number} the result of this operation.
