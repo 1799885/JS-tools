@@ -25,6 +25,13 @@ class BSTNode {
     }
 
     toString() {
+        if (typeof this.data.obj == "number") {
+            let s = "" + this.data.obj;
+            while(s.length < 3) {
+                s = "0" + s;
+            }
+            return s;
+        }
         return this.data.obj.toString();
     }
 }
@@ -225,6 +232,9 @@ class BinarySearchTree {
         }
     }
 
+    
+
+
     // PRINT FUNCTIONS
 
     printLine(node, t) {
@@ -262,6 +272,64 @@ class BinarySearchTree {
             result += "   " + treeArr[i] + "\n";
         }
         return result;
+    }
+    
+
+    isLastFork(node) {
+        let l = node.left;
+        let r = node.right;
+        if (!l && !r) return false;
+        else if (l.right || l.left || r.right || r.left) return false;
+        
+        return true;
+    }
+    // 000
+    //  ├───────────┐
+    // 010         025
+    //  ├───────┐   ├───┐
+    // 007     013 022 027
+    //  ├───┐   │
+    // 005 009 017
+
+    printTreeNode(node) {
+        if (this.isLastFork(node)) {
+            let l = node.left;
+            let r = node.right;
+            let symbol, s;
+            if (l && r) {
+                symbol = " ├───┐";
+                s = l.toString() + " " + r.toString();
+
+            }
+            else {
+                symbol = " │";
+                let f = l;
+                if (!f) {
+                    f = r;
+                }
+
+                s = f.toString();
+            }
+
+
+            
+
+            // s = f.toString();
+            // if (r) {
+            //     s += " " + r.toString();
+            // }
+
+
+            return [node.toString(), symbol, s];
+        }
+        else {
+            return this.printTreeNode(node.left);
+        }
+
+    }
+
+    printTree() {
+        return this.printTreeNode(this.getRootNode()).join("\n");
     }
 
     // toString(node, dephUntilMax) {
@@ -478,7 +546,42 @@ if (!module.parent) {
     // test();
 
     // BST.print();
-    console.log(BST.recursivePrint());
-    console.log("---------------\n├──15\n    ├──10\n       ├──7\n          ├──5\n          └──9\n       └──13\n    └──25\n       ├──22\n          └──17\n       └──27");
+    // console.log(BST.recursivePrint());
+    // console.log("---------------\n├──15\n    ├──10\n       ├──7\n          ├──5\n          └──9\n       └──13\n    └──25\n       ├──22\n          └──17\n       └──27");
+    
+    console.log(BST.printTree())
+    // console.log("---------------\n                  000\n           ________-________\n          /                 \\\n        010                 025\n      ___-___             ___-___\n     /       \\           /       \\\n   007       013       022       027\n   _-_       _-_       _-_       _-_ \n  /   \\     /   \\     /   \\     /   \\\n005   009 017   000 000   000 000   000");
+    console.log("---------------\n000\n ├───────────┐\n010         025\n ├───────┐   ├───┐\n007     013 022 027\n ├───┐   │\n005 009 017");
+
+
+    // |                  000
+    // |           ________-________
+    // |          /                 \
+    // |        010                 025
+    // |      ___-___             ___-___
+    // |     /       \           /       \
+    // |   007       013       022       027
+    // |   _-_       _-_       _-_       _-_ 
+    // |  /   \     /   \     /   \     /   \
+    // |005   009 017   000 000   000 000   000
+
+    // 000
+    //  ├───────────┐
+    // 010         025
+    //  ├───────┐   ├───┐
+    // 007     013 022 027
+    //  ├───┐   │
+    // 005 009 017
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
     // BST.printBinaryTree(BST.getRootNode(), 0, 10);
 }
