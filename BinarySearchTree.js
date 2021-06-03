@@ -291,6 +291,12 @@ class BinarySearchTree {
         
         return true;
     }
+
+    isLastNode(node) {
+        if (node.left != null || node.right != null) return false;
+        return true;
+    }
+
     // 000
     //  ├───────────┐
     // 010         025
@@ -325,24 +331,45 @@ class BinarySearchTree {
             while (name.length < s.length) {
                 name += " ";
             }
-            return [name, symbol, s];
+            return this.normalizeArr([name, symbol, s]);
+        }
+        else if (this.isLastNode(node)) {
+            return [node.toString()];
         }
         else {
             let l = this.printTreeNode(node.left);
             let r = this.printTreeNode(node.right);
 
-            console.log(node.left);
-            console.log(l);
-            console.log(node.right);
-            console.log(r);
+            // console.log(node.left);
+            // console.log(l);
+            // console.log(node.right);
+            // console.log(r);
             let newArr = this.mergeArr(l, r);
             
-            
-            return newArr;
+            let bracket = " ├─";
+            while (bracket.length < l[0].length + 2) {
+                bracket += "─";
+            }
+            bracket += "┐";
+
+            newArr.unshift(bracket);
+            newArr.unshift(node.toString());
+            console.log(newArr)
+            return this.normalizeArr(newArr);
         }
 
     }
 
+    normalizeArr(arr) {
+        if (arr.length == 0) return arr;
+        let len = arr[arr.length - 1].length;
+        for (let i = 0; i < arr.length - 1; i++) {
+            while (arr[i].length < len) {
+                arr[i] += " ";
+            }
+        }
+        return arr;
+    }
     mergeArr(a, b) {
         let i = 0;
         let newArr = [];
@@ -350,11 +377,11 @@ class BinarySearchTree {
             newArr.push(a[i] + " " + b[i]);
         }
         let offSl = "", offSr = "";
-        for (let j = 0; b.length > 0 && j < b[b.length - 1].length; j++) {
+        for (let j = 0; a.length > 0 && j < a[a.length - 1].length; j++) {
             offSl += " ";
         }
 
-        for (let j = 0; a.length > 0 && j < a[a.length - 1].length; j++) {
+        for (let j = 0; b.length > 0 && j < b[b.length - 1].length; j++) {
             offSr += " ";
         }
 
@@ -466,7 +493,7 @@ if (!module.parent) {
     // Inserting nodes to the BinarySearchTree
     BST.insert(15);
     BST.insert(25);
-    let debugNode = BST.insert(10);
+    BST.insert(10);
     BST.insert(7);
     BST.insert(22);
     BST.insert(17);
@@ -484,7 +511,7 @@ if (!module.parent) {
     // |5   9  17 
 
 
-    // |                  000
+    // |                  015
     // |           ________-________
     // |          /                 \
     // |        010                 025
@@ -495,7 +522,7 @@ if (!module.parent) {
     // |  /   \     /   \     /   \     /   \
     // |005   009 000   000 170   000 000   000
 
-    // 000
+    // 015
     //  ├───────────┐
     // 010         025
     //  ├───────┐   ├───┐
@@ -542,22 +569,22 @@ if (!module.parent) {
     // test();
 
     // BST.print();
-    console.log(BST.recursivePrint());
+    // console.log(BST.recursivePrint());
     // console.log("---------------\n├──15\n    ├──10\n       ├──7\n          ├──5\n          └──9\n       └──13\n    └──25\n       ├──22\n          └──17\n       └──27");
     
-    console.log(BST.printTree(debugNode))
+    console.log(BST.printTree())
     // console.log("---------------\n                  000\n           ________-________\n          /                 \\\n        010                 025\n      ___-___             ___-___\n     /       \\           /       \\\n   007       013       022       027\n   _-_       _-_       _-_       _-_ \n  /   \\     /   \\     /   \\     /   \\\n005   009 017   000 000   000 000   000");
-    console.log("---------------\n000\n ├───────────┐\n010         025\n ├───────┐   ├───┐\n007     013 022 027\n ├───┐   │\n005 009 017");
+    console.log("---------------\n015\n ├───────────┐\n010         025\n ├───────┐   ├───┐\n007     013 022 027\n ├───┐       │\n005 009     017");
 
 
-    console.log("\n\ntest2\n")
-    let b1 = new BinarySearchTree();
-    b1.insert(5);
-    b1.insert(3);
-    b1.insert(2);
-    b1.insert(4);
+    // console.log("\n\ntest2\n")
+    // let b1 = new BinarySearchTree();
+    // b1.insert(5);
+    // b1.insert(3);
+    // b1.insert(2);
+    // b1.insert(4);
 
 
-    console.log(b1.recursivePrint());
-    console.log(b1.printTree());
+    // console.log(b1.recursivePrint());
+    // console.log(b1.printTree());
 }
