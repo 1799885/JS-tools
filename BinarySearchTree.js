@@ -299,12 +299,15 @@ class BinarySearchTree {
     // 005 009 017
 
     printTreeNode(node) {
+        if (node == null) {
+            return [];
+        }
         if (this.isLastFork(node)) {
             let l = node.left;
             let r = node.right;
             let symbol, s;
             if (l && r) {
-                symbol = " ├───┐";
+                symbol = " ├───┐ ";
                 s = l.toString() + " " + r.toString();
 
             }
@@ -317,11 +320,45 @@ class BinarySearchTree {
 
                 s = f.toString();
             }
-
-            return [node.toString(), symbol, s];
+            let name = node.toString();
+            while (name.length < s.length) {
+                name += " ";
+            }
+            return [name, symbol, s];
         }
         else {
-            return this.printTreeNode(node.left);
+            let l = this.printTreeNode(node.left);
+            let r = this.printTreeNode(node.right);
+
+            let minIndex = Math.min(l.length, r.length);
+
+            let newArr = [];
+            let i = 0;
+            console.log(l);
+            console.log(r);
+            for (; i < minIndex; i++) {
+                newArr.push(l[i] + " " + r[i]);
+            }
+            if (minIndex == l.length) {
+                let offS = "";
+                while (offS.length < r[r.length - 1].length) {
+                    offS += " ";
+                }
+                for (; i < r.length; i++) {
+                    newArr.push(offS + " " + r[i]);
+                }
+            }
+            else {
+                let offS = "";
+                while (offS.length < l[l.length - 1].length) {
+                    offS += " ";
+                }
+                for (; i < l.length; i++) {
+                    newArr.push(r[i] + " " + offS);
+                }
+            }
+            
+            return newArr;
         }
 
     }
@@ -515,7 +552,7 @@ if (!module.parent) {
     b1.insert(3);
     b1.insert(2);
     b1.insert(4);
-    
+
 
     console.log(b1.recursivePrint());
     console.log(b1.printTree());
