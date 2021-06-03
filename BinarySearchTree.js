@@ -55,6 +55,7 @@ class BinarySearchTree {
         else { // find the correct position in the tree and add the node
             this.insertNode(this.root, newNode);
             this.size++;
+            return newNode;
         }
     }
 
@@ -295,8 +296,8 @@ class BinarySearchTree {
     // 010         025
     //  ├───────┐   ├───┐
     // 007     013 022 027
-    //  ├───┐   │
-    // 005 009 017
+    //  ├───┐       │
+    // 005 009     017
 
     printTreeNode(node) {
         if (node == null) {
@@ -330,41 +331,44 @@ class BinarySearchTree {
             let l = this.printTreeNode(node.left);
             let r = this.printTreeNode(node.right);
 
-            let minIndex = Math.min(l.length, r.length);
-
-            let newArr = [];
-            let i = 0;
+            console.log(node.left);
             console.log(l);
+            console.log(node.right);
             console.log(r);
-            for (; i < minIndex; i++) {
-                newArr.push(l[i] + " " + r[i]);
-            }
-            if (minIndex == l.length) {
-                let offS = "";
-                while (offS.length < r[r.length - 1].length) {
-                    offS += " ";
-                }
-                for (; i < r.length; i++) {
-                    newArr.push(offS + " " + r[i]);
-                }
-            }
-            else {
-                let offS = "";
-                while (offS.length < l[l.length - 1].length) {
-                    offS += " ";
-                }
-                for (; i < l.length; i++) {
-                    newArr.push(r[i] + " " + offS);
-                }
-            }
+            let newArr = this.mergeArr(l, r);
+            
             
             return newArr;
         }
 
     }
 
-    printTree() {
-        return this.printTreeNode(this.getRootNode()).join("\n");
+    mergeArr(a, b) {
+        let i = 0;
+        let newArr = [];
+        for (; i < a.length && i < b.length; i++) {
+            newArr.push(a[i] + " " + b[i]);
+        }
+        let offSl = "", offSr = "";
+        for (let j = 0; b.length > 0 && j < b[b.length - 1].length; j++) {
+            offSl += " ";
+        }
+
+        for (let j = 0; a.length > 0 && j < a[a.length - 1].length; j++) {
+            offSr += " ";
+        }
+
+        for (; i < a.length; i++) {
+            newArr.push(a[i] + " " + offSr);
+        }
+        for (; i < b.length; i++) {
+            newArr.push(offSl + " " + b[i]);
+        }
+        return newArr;
+    }
+
+    printTree(node=this.root) {
+        return this.printTreeNode(node).join("\n");
     }
 }
 
@@ -462,7 +466,7 @@ if (!module.parent) {
     // Inserting nodes to the BinarySearchTree
     BST.insert(15);
     BST.insert(25);
-    BST.insert(10);
+    let debugNode = BST.insert(10);
     BST.insert(7);
     BST.insert(22);
     BST.insert(17);
@@ -489,15 +493,15 @@ if (!module.parent) {
     // |   007       013       022       027
     // |   _-_       _-_       _-_       _-_ 
     // |  /   \     /   \     /   \     /   \
-    // |005   009 017   000 000   000 000   000
+    // |005   009 000   000 170   000 000   000
 
     // 000
     //  ├───────────┐
     // 010         025
     //  ├───────┐   ├───┐
     // 007     013 022 027
-    //  ├───┐   │
-    // 005 009 017
+    //  ├───┐       │
+    // 005 009     017
 
     // |                                                                               r                                                                               |
     // |                                         ______________________________________|______________________________________                                         |
@@ -538,10 +542,10 @@ if (!module.parent) {
     // test();
 
     // BST.print();
-    // console.log(BST.recursivePrint());
+    console.log(BST.recursivePrint());
     // console.log("---------------\n├──15\n    ├──10\n       ├──7\n          ├──5\n          └──9\n       └──13\n    └──25\n       ├──22\n          └──17\n       └──27");
     
-    console.log(BST.printTree())
+    console.log(BST.printTree(debugNode))
     // console.log("---------------\n                  000\n           ________-________\n          /                 \\\n        010                 025\n      ___-___             ___-___\n     /       \\           /       \\\n   007       013       022       027\n   _-_       _-_       _-_       _-_ \n  /   \\     /   \\     /   \\     /   \\\n005   009 017   000 000   000 000   000");
     console.log("---------------\n000\n ├───────────┐\n010         025\n ├───────┐   ├───┐\n007     013 022 027\n ├───┐   │\n005 009 017");
 
