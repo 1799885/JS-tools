@@ -297,14 +297,6 @@ class BinarySearchTree {
         return true;
     }
 
-    // 000
-    //  ├───────────┐
-    // 010         025
-    //  ├───────┐   ├───┐
-    // 007     013 022 027
-    //  ├───┐       │
-    // 005 009     017
-
     printTreeNode(node) {
         if (node == null) {
             return [];
@@ -340,10 +332,6 @@ class BinarySearchTree {
             let l = this.printTreeNode(node.left);
             let r = this.printTreeNode(node.right);
 
-            // console.log(node.left);
-            // console.log(l);
-            // console.log(node.right);
-            // console.log(r);
             let newArr = this.mergeArr(l, r);
             
             let bracket = " ├─";
