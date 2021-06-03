@@ -225,70 +225,43 @@ class BinarySearchTree {
         }
     }
 
-
-    // recursivePrint(node=null, depth=0, t=1){
-    //     if (node == null) {
-    //         if (depth == 0){
-    //             node = this.getRootNode();
-    //         }
-    //         else {
-    //             return "";
-    //         }
-    //     }
-
-    //     let leftType = (node.right == null)? 0 : 1;
-
-    //     return this.printLine(node, depth, t) + this.recursivePrint(node.left, depth + 1, leftType) + this.recursivePrint(node.right, depth + 1, 0);
-    // }
+    // PRINT FUNCTIONS
 
     printLine(node, t) {
         let nodeName = node.toString();
-
         let typeConversor = ["└", "├", "─"];
-        let nodeLine = typeConversor[t] + "──" + nodeName + "";
-        // let nodeLine = typeConversor[t] + "──" + nodeName + "\n";
-        let extra = ""
-        // for (let i = 0; i <= depth- 1; i++) {
-        //     extra += "   ";
-
-        // }
-        // for (let i = depth - 2; i >= 0 && i < depth; i++) {
-        //     extra += "│  ";
-        // }
-        return extra + nodeLine;
+        return typeConversor[t] + "──" + nodeName;
     }
 
-    recursivePrintArr(node=this.root, depth=0, type=2) {
+    recursivePrintArr(node=this.root, type=2) {
         if (node == null) {
             return [];
         }
 
         let leftType = (node.right == null)? 0 : 1;
         
-        let left = this.recursivePrintArr(node.left, depth + 1, leftType);
+        let left = this.recursivePrintArr(node.left, leftType);
 
         for (let i = 1; i < left.length; i++) {
             left[i] = "│  " + left[i];
         }
 
-        let right = this.recursivePrintArr(node.right, depth + 1, 0);
+        let right = this.recursivePrintArr(node.right, 0);
         for (let i = 1; i < right.length; i++) {
             right[i] = "   " + right[i];
         }
 
         return [this.printLine(node, type), ...left, ...right];
-        // return this.printLine(node, type) + "\n   " + left + "   " + right;
     }
 
-    recursivePrint(node=this.root, depth=0, type=2) {
-        let inp =  this.recursivePrintArr(node, depth, type);
-        console.log(inp);
-        let result = inp[0] + "\n";
-        for (let i = 1; i < inp.length; i++) {
-            result += "   " + inp[i] + "\n";
+    recursivePrint(node=this.root, type=2) {
+        let treeArr =  this.recursivePrintArr(node, type);
+        
+        let result = treeArr[0] + "\n";
+        for (let i = 1; i < treeArr.length; i++) {
+            result += "   " + treeArr[i] + "\n";
         }
         return result;
-        // return inp.join("\n");
     }
 
     // toString(node, dephUntilMax) {
@@ -315,32 +288,32 @@ class BinarySearchTree {
     //     let extension;
     // }
 
-    printBinaryTree(node, space, height) {
-        if (node == null) {
-            return;
-        }
-        space += height;
-        this.printBinaryTree(node.right, space, height);
-        console.log();
+    // printBinaryTree(node, space, height) {
+    //     if (node == null) {
+    //         return;
+    //     }
+    //     space += height;
+    //     this.printBinaryTree(node.right, space, height);
+    //     console.log();
 
-        let str2print = "";
-        for (let i = height; i < space; i++) {
-            str2print += " ";
-        }
+    //     let str2print = "";
+    //     for (let i = height; i < space; i++) {
+    //         str2print += " ";
+    //     }
 
 
-        let nodeName;
-        if (typeof node.data == 'number'){
-            nodeName = "" + node.data;
-        }
-        else {
-            nodeName = node.data.toString();
-        }
+    //     let nodeName;
+    //     if (typeof node.data == 'number'){
+    //         nodeName = "" + node.data;
+    //     }
+    //     else {
+    //         nodeName = node.data.toString();
+    //     }
 
-        str2print += nodeName;
-        console.log(str2print);
-        this.printBinaryTree(node.left, space, height);
-    }
+    //     str2print += nodeName;
+    //     console.log(str2print);
+    //     this.printBinaryTree(node.left, space, height);
+    // }
 }
 
 
