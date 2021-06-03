@@ -23,6 +23,10 @@ class BSTNode {
             return 1;
         }
     }
+
+    toString() {
+        return this.data.obj.toString();
+    }
 }
 
 // Binary Search tree class
@@ -36,7 +40,7 @@ class BinarySearchTree {
 	/** 
      * Helper method which creates a new node to be inserted and calls insertNode 
      * */ 
-    insert(obj, value) {
+    insert(obj, value=obj) {
         var newNode = new BSTNode(obj, value); // Creating a node and initailising with data
         if(this.root === null) { // root is null then node will be added to the tree and made root.
             this.root = newNode;
@@ -52,7 +56,7 @@ class BinarySearchTree {
      * */
     insertNode(node, newNode) {
         // if(newNode.data < node.data) { // if the data is less than the node data move left of the tree
-        if (newNode.compareTo(data) == -1) {
+        if (newNode.compareTo(node) == -1) {
             if(node.left === null) { // if left is null insert node here
                 node.left = newNode;
             }
@@ -222,42 +226,69 @@ class BinarySearchTree {
     }
 
 
-    // print() {
-    //     treeDepth = this.findDepth();
-    //     matrixSize = Math.pow(2, treeDepth);
-    //     console.log(treeDepth);
+    // recursivePrint(node=null, depth=0, t=1){
+    //     if (node == null) {
+    //         if (depth == 0){
+    //             node = this.getRootNode();
+    //         }
+    //         else {
+    //             return "";
+    //         }
+    //     }
+
+    //     let leftType = (node.right == null)? 0 : 1;
+
+    //     return this.printLine(node, depth, t) + this.recursivePrint(node.left, depth + 1, leftType) + this.recursivePrint(node.right, depth + 1, 0);
     // }
 
-    recursivePrint(node=null, depth=0, t=1){
+    printLine(node, t) {
+        let nodeName = node.toString();
+
+        let typeConversor = ["└", "├", "─"];
+        let nodeLine = typeConversor[t] + "──" + nodeName + "";
+        // let nodeLine = typeConversor[t] + "──" + nodeName + "\n";
+        let extra = ""
+        // for (let i = 0; i <= depth- 1; i++) {
+        //     extra += "   ";
+
+        // }
+        // for (let i = depth - 2; i >= 0 && i < depth; i++) {
+        //     extra += "│  ";
+        // }
+        return extra + nodeLine;
+    }
+
+    recursivePrintArr(node=this.root, depth=0, type=2) {
         if (node == null) {
-            if (depth == 0){
-                node = this.getRootNode();
-            }
-            else {
-                return "";
-            }
+            return [];
         }
 
         let leftType = (node.right == null)? 0 : 1;
+        
+        let left = this.recursivePrintArr(node.left, depth + 1, leftType);
 
-        return this.printLine(node, depth, t) + this.recursivePrint(node.left, depth + 1, leftType) + this.recursivePrint(node.right, depth + 1, 0);
+        for (let i = 1; i < left.length; i++) {
+            left[i] = "│  " + left[i];
+        }
+
+        let right = this.recursivePrintArr(node.right, depth + 1, 0);
+        for (let i = 1; i < right.length; i++) {
+            right[i] = "   " + right[i];
+        }
+
+        return [this.printLine(node, type), ...left, ...right];
+        // return this.printLine(node, type) + "\n   " + left + "   " + right;
     }
 
-    printLine(node, depth, t) {
-        let nodeName;
-        if (typeof node.data == 'number'){
-            nodeName = "" + node.data;
+    recursivePrint(node=this.root, depth=0, type=2) {
+        let inp =  this.recursivePrintArr(node, depth, type);
+        console.log(inp);
+        let result = inp[0] + "\n";
+        for (let i = 1; i < inp.length; i++) {
+            result += "   " + inp[i] + "\n";
         }
-        else {
-            nodeName = node.data.toString();
-        }
-
-        let typeConversor = ["└", "├"];
-        let nodeLine = typeConversor[t] + "──" + nodeName + "\n";
-        for (let i = 0; i < depth; i++) {
-            nodeLine = "│  " + nodeLine;
-        }
-        return nodeLine;
+        return result;
+        // return inp.join("\n");
     }
 
     // toString(node, dephUntilMax) {
@@ -475,5 +506,6 @@ if (!module.parent) {
 
     // BST.print();
     console.log(BST.recursivePrint());
-    BST.printBinaryTree(BST.getRootNode(), 0, 10);
+    console.log("---------------\n├──15\n    ├──10\n       ├──7\n          ├──5\n          └──9\n       └──13\n    └──25\n       ├──22\n          └──17\n       └──27");
+    // BST.printBinaryTree(BST.getRootNode(), 0, 10);
 }
