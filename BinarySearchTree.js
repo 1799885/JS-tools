@@ -336,11 +336,13 @@ class BinarySearchTree {
 
             let bracket = " │";
             if (r.length > 0) {
-                bracket = " ├─"
-                while (bracket.length < l[0].length + 2) {
-                    bracket += "─";
+                if (l.length > 0) {
+                    bracket = " ├─"
+                    while (bracket.length < l[0].length + 2) {
+                        bracket += "─";
+                    }
+                    bracket += "┐";
                 }
-                bracket += "┐";
             }
             newArr.unshift(bracket);
             newArr.unshift(node.toString());
@@ -366,19 +368,19 @@ class BinarySearchTree {
             newArr.push(a[i] + " " + b[i]);
         }
         let offSl = "", offSr = "";
-        for (let j = 0; a.length > 0 && j < a[a.length - 1].length; j++) {
+        for (let j = 0; a.length > 0 && j <= a[a.length - 1].length; j++) {
             offSl += " ";
         }
 
-        for (let j = 0; b.length > 0 && j < b[b.length - 1].length; j++) {
+        for (let j = 0; b.length > 0 && j <= b[b.length - 1].length; j++) {
             offSr += " ";
         }
 
         for (; i < a.length; i++) {
-            newArr.push(a[i] + " " + offSr);
+            newArr.push(a[i] + offSr);
         }
         for (; i < b.length; i++) {
-            newArr.push(offSl + " " + b[i]);
+            newArr.push(offSl + b[i]);
         }
         return newArr;
     }
@@ -569,9 +571,12 @@ if (!module.parent) {
     console.log("\n\ntest2\n")
     let b1 = new BinarySearchTree();
     b1.insert(5);
-    b1.insert(3);
-    b1.insert(2);
-    b1.insert(4);
+    // b1.insert(3);
+    // b1.insert(2);
+    // b1.insert(4);
+    b1.insert(8);
+    b1.insert(9);
+    b1.insert(7);
 
 
     // console.log(b1.recursivePrint());
