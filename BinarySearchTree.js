@@ -297,40 +297,16 @@ class BinarySearchTree {
         return true;
     }
 
-    printTreeNode(node) {
+    printTreeNode(node, mode="izq") {
         if (node == null) {
             return [];
-        }
-        if (this.isLastFork(node)) {
-            let l = node.left;
-            let r = node.right;
-            let symbol, s;
-            if (l && r) {
-                symbol = " ├───┐ ";
-                s = l.toString() + " " + r.toString();
-
-            }
-            else {
-                symbol = " │";
-                let f = l;
-                if (!f) {
-                    f = r;
-                }
-
-                s = f.toString();
-            }
-            let name = node.toString();
-            while (name.length < s.length) {
-                name += " ";
-            }
-            return this.normalizeArr([name, symbol, s]);
         }
         else if (this.isLastNode(node)) {
             return [node.toString()];
         }
         else {
-            let l = this.printTreeNode(node.left);
-            let r = this.printTreeNode(node.right);
+            let l = this.printTreeNode(node.left, mode);
+            let r = this.printTreeNode(node.right, mode);
 
             let newArr = this.mergeArr(l, r);
 
@@ -346,12 +322,15 @@ class BinarySearchTree {
             }
             newArr.unshift(bracket);
             newArr.unshift(node.toString());
+            if (mode == "izq") {
+                return this.normalizeArrIzq(newArr);
+            }
             return this.normalizeArr(newArr);
         }
 
     }
 
-    normalizeArr(arr) {
+    normalizeArrIzq(arr) {
         if (arr.length == 0) return arr;
         let len = arr[arr.length - 1].length;
         for (let i = 0; i < arr.length - 1; i++) {
