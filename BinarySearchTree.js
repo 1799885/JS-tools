@@ -298,36 +298,31 @@ class BinarySearchTree {
     }
 
     printTreeNode(node, mode="izq") {
-        if (node == null) {
-            return [];
-        }
-        else if (this.isLastNode(node)) {
+        if (node == null) return [];
+
+        if (this.isLastNode(node)) {
             return [node.toString()];
         }
-        else {
-            let l = this.printTreeNode(node.left, mode);
-            let r = this.printTreeNode(node.right, mode);
+    
+        let l = this.printTreeNode(node.left, mode);
+        let r = this.printTreeNode(node.right, mode);
 
-            let newArr = this.mergeArr(l, r);
+        let newArr = this.mergeArr(l, r);
 
-            let bracket = " │";
-            if (r.length > 0) {
-                if (l.length > 0) {
-                    bracket = " ├─"
-                    while (bracket.length < l[0].length + 2) {
-                        bracket += "─";
-                    }
-                    bracket += "┐";
-                }
+        let bracket = " │";
+        if (r.length > 0 && l.length > 0) {
+            bracket = " ├─"
+            while (bracket.length < l[0].length + 2) {
+                bracket += "─";
             }
-            newArr.unshift(bracket);
-            newArr.unshift(node.toString());
-            if (mode == "izq") {
-                return this.normalizeArrIzq(newArr);
-            }
-            return this.normalizeArr(newArr);
+            bracket += "┐";
         }
-
+        newArr.unshift(bracket);
+        newArr.unshift(node.toString());
+        if (mode == "izq") {
+            return this.normalizeArrIzq(newArr);
+        }
+        return this.normalizeArr(newArr);
     }
 
     normalizeArrIzq(arr) {
