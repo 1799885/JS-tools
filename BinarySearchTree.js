@@ -297,7 +297,7 @@ class BinarySearchTree {
 
         let newArr = this.mergeArr(l, r);
 
-        let bracket = " │"; // Make the bracket
+        let bracket = " │ "; // Make the bracket
         if (r.length > 0 && l.length > 0) { // If two childs
             bracket = " ├─"
             for (let j = bracket.length; j < l[0].length + 2; j++) {
@@ -315,6 +315,57 @@ class BinarySearchTree {
                 newArr[i] += " ";
             }
         }
+        return newArr;
+    }
+
+    printTreeNodeReal(node) {
+        if (node == null) return [];
+
+        if (this.isLastNode(node)) {
+            return [node.toString()];
+        }
+    
+        let l = this.printTreeNodeReal(node.left);
+        let r = this.printTreeNodeReal(node.right);
+
+        let newArr = this.mergeArr(l, r);
+
+        let bracket = "│"; // Make the bracket
+
+        if (r.length > 0 && l.length > 0) { // If two childs
+            bracket = "─┴─";
+            for (let j = bracket.length; j < l[0].length - 2; j+=2) {
+                bracket = "─" + bracket + "─";
+            }
+
+            bracket = "┌" + bracket + "┐";
+            
+        }
+        newArr.unshift(bracket); // Add bracket to the first of the array
+        newArr.unshift(node.toString()); // Add the name of the node to the first
+
+        console.log("----------------------")
+        for (let q of newArr) {
+            console.log("|" + q + "|");
+        }
+        console.log("---")
+
+        // Normalice size of the lines
+        let len = newArr[newArr.length - 1].length; // Last line is always the longest and the one already valid
+        // for (let i = 0; i < newArr.length - 1; i++) { // For each line but the last
+        //     for (let j = newArr[i].length; j < len; j+=2) { // Add space until same length
+        //         newArr[i] = " " + newArr[i] + " ";
+        //     }
+        //     if (newArr[i].length < len) { // Add space until same length
+        //         newArr[i] = " " + newArr[i];
+        //     }
+        // }
+
+
+        for (let q of newArr) {
+            console.log("|" + q + "|");
+        }
+
         return newArr;
     }
 
@@ -343,7 +394,8 @@ class BinarySearchTree {
     }
 
     printTree(node=this.root) {
-        return this.printTreeNode(node).join("\n");
+        // return this.printTreeNode(node).join("\n");
+        return this.printTreeNodeReal(node).join("\n");
     }
 }
 
@@ -525,17 +577,17 @@ if (!module.parent) {
     console.log("---------------\n015\n ├───────────┐\n010         025\n ├───────┐   ├───┐\n007     013 022 027\n ├───┐       │\n005 009     017");
 
 
-    console.log("\n\ntest2\n")
-    let b1 = new BinarySearchTree();
-    b1.insert(5);
-    // b1.insert(3);
-    // b1.insert(2);
-    // b1.insert(4);
-    b1.insert(8);
-    b1.insert(9);
-    b1.insert(7);
+    // console.log("\n\ntest2\n")
+    // let b1 = new BinarySearchTree();
+    // b1.insert(5);
+    // // b1.insert(3);
+    // // b1.insert(2);
+    // // b1.insert(4);
+    // b1.insert(8);
+    // b1.insert(9);
+    // b1.insert(7);
 
 
-    // console.log(b1.recursivePrint());
-    console.log(b1.printTree());
+    // // console.log(b1.recursivePrint());
+    // console.log(b1.printTree());
 }
