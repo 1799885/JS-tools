@@ -300,7 +300,7 @@ class BinarySearchTree {
         let bracket = " │";
         if (r.length > 0 && l.length > 0) {
             bracket = " ├─"
-            while (bracket.length < l[0].length + 2) {
+            for (let j = bracket.length; j < l[0].length + 2; j++) {
                 bracket += "─";
             }
             bracket += "┐";
@@ -311,7 +311,7 @@ class BinarySearchTree {
         // Normalice size of the lines
         let len = newArr[newArr.length - 1].length;
         for (let i = 0; i < newArr.length - 1; i++) {
-            while (newArr[i].length < len) {
+            for (let j = newArr[i].length; j < len; j++) {
                 newArr[i] += " ";
             }
         }
