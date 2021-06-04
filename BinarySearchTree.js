@@ -333,16 +333,17 @@ class BinarySearchTree {
             let r = this.printTreeNode(node.right);
 
             let newArr = this.mergeArr(l, r);
-            
-            let bracket = " ├─";
-            while (bracket.length < l[0].length + 2) {
-                bracket += "─";
-            }
-            bracket += "┐";
 
+            let bracket = " │";
+            if (r.length > 0) {
+                bracket = " ├─"
+                while (bracket.length < l[0].length + 2) {
+                    bracket += "─";
+                }
+                bracket += "┐";
+            }
             newArr.unshift(bracket);
             newArr.unshift(node.toString());
-            console.log(newArr)
             return this.normalizeArr(newArr);
         }
 
@@ -565,14 +566,14 @@ if (!module.parent) {
     console.log("---------------\n015\n ├───────────┐\n010         025\n ├───────┐   ├───┐\n007     013 022 027\n ├───┐       │\n005 009     017");
 
 
-    // console.log("\n\ntest2\n")
-    // let b1 = new BinarySearchTree();
-    // b1.insert(5);
-    // b1.insert(3);
-    // b1.insert(2);
-    // b1.insert(4);
+    console.log("\n\ntest2\n")
+    let b1 = new BinarySearchTree();
+    b1.insert(5);
+    b1.insert(3);
+    b1.insert(2);
+    b1.insert(4);
 
 
     // console.log(b1.recursivePrint());
-    // console.log(b1.printTree());
+    console.log(b1.printTree());
 }
