@@ -297,21 +297,21 @@ class BinarySearchTree {
 
         let newArr = this.mergeArr(l, r);
 
-        let bracket = " │";
-        if (r.length > 0 && l.length > 0) {
+        let bracket = " │"; // Make the bracket
+        if (r.length > 0 && l.length > 0) { // If two childs
             bracket = " ├─"
             for (let j = bracket.length; j < l[0].length + 2; j++) {
                 bracket += "─";
             }
             bracket += "┐";
         }
-        newArr.unshift(bracket);
-        newArr.unshift(node.toString());
+        newArr.unshift(bracket); // Add bracket to the first of the array
+        newArr.unshift(node.toString()); // Add the name of the node to the first
 
         // Normalice size of the lines
-        let len = newArr[newArr.length - 1].length;
-        for (let i = 0; i < newArr.length - 1; i++) {
-            for (let j = newArr[i].length; j < len; j++) {
+        let len = newArr[newArr.length - 1].length; // Last line is always the longest and the one already valid
+        for (let i = 0; i < newArr.length - 1; i++) { // For each line but the last
+            for (let j = newArr[i].length; j < len; j++) { // Add space until same length
                 newArr[i] += " ";
             }
         }
