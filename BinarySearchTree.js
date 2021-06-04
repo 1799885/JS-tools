@@ -282,15 +282,15 @@ class BinarySearchTree {
 
 
 
-    isLastFork(node) {
-        let l = node.left;
-        let r = node.right;
-        if (l == null && r == null) return false;
-        else if (l != null && (l.right || l.left) ||
-                 r != null && (r.right || r.left)) return false;
+    // isLastFork(node) {
+    //     let l = node.left;
+    //     let r = node.right;
+    //     if (l == null && r == null) return false;
+    //     else if (l != null && (l.right || l.left) ||
+    //              r != null && (r.right || r.left)) return false;
         
-        return true;
-    }
+    //     return true;
+    // }
 
     isLastNode(node) {
         if (node.left != null || node.right != null) return false;
