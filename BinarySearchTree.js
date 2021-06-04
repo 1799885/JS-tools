@@ -280,32 +280,20 @@ class BinarySearchTree {
     }
 
 
-
-
-    // isLastFork(node) {
-    //     let l = node.left;
-    //     let r = node.right;
-    //     if (l == null && r == null) return false;
-    //     else if (l != null && (l.right || l.left) ||
-    //              r != null && (r.right || r.left)) return false;
-        
-    //     return true;
-    // }
-
     isLastNode(node) {
         if (node.left != null || node.right != null) return false;
         return true;
     }
 
-    printTreeNode(node, mode="izq") {
+    printTreeNode(node) {
         if (node == null) return [];
 
         if (this.isLastNode(node)) {
             return [node.toString()];
         }
     
-        let l = this.printTreeNode(node.left, mode);
-        let r = this.printTreeNode(node.right, mode);
+        let l = this.printTreeNode(node.left);
+        let r = this.printTreeNode(node.right);
 
         let newArr = this.mergeArr(l, r);
 
@@ -319,22 +307,17 @@ class BinarySearchTree {
         }
         newArr.unshift(bracket);
         newArr.unshift(node.toString());
-        if (mode == "izq") {
-            return this.normalizeArrIzq(newArr);
-        }
-        return this.normalizeArr(newArr);
-    }
 
-    normalizeArrIzq(arr) {
-        if (arr.length == 0) return arr;
-        let len = arr[arr.length - 1].length;
-        for (let i = 0; i < arr.length - 1; i++) {
-            while (arr[i].length < len) {
-                arr[i] += " ";
+        // Normalice size of the lines
+        let len = newArr[newArr.length - 1].length;
+        for (let i = 0; i < newArr.length - 1; i++) {
+            while (newArr[i].length < len) {
+                newArr[i] += " ";
             }
         }
-        return arr;
+        return newArr;
     }
+
     mergeArr(a, b) {
         let i = 0;
         let newArr = [];
