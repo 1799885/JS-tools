@@ -74,7 +74,7 @@ class SegmentCollision {
 }
 
 
-if (require && require.main === module) {
+if (typeof require !== 'undefined' && require.main === module) {
     let tests = [
         [
             [ [ 0, 0 ], [ 5, 5 ] ],
