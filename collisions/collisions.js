@@ -1,14 +1,27 @@
+/**
+ * Code taken from https://gist.github.com/gordonwoodhull/50eb65d2f048789f9558, full credit to the author. 
+ */
 class SegmentCollision {
 
     static eps = 0.0000001;
+    
     static between (a, b, c) {
         return a - this.eps <= b && b <= c + this.eps;
     }
-
-    static collide(x1, y1, x2, y2, x3, y3, x4, y4) {
-        var x = (( x1 * y2 - y1 * x2 ) * ( x3 - x4 ) - ( x1 - x2 ) * ( x3 * y4 - y3 * x4 )) /
+    
+    /**
+     * Whenever two segments collide.
+     * @param {object} x1-y1 First point of the first segment.
+     * @param {object} x2-y2 Second point of the first segment.
+     * @param {object} x3-y3 First point of the second segment.
+     * @param {object} x4-y4 Second point of the second segment.
+     * @returns {boolean|object} False if there's no collision. Else, {x: X, y: Y} object with the collision point.
+     */
+    static collision(x1, y1, x2, y2, x3, y3, x4, y4) {
+        // Try to get collision coordinates
+        let x = (( x1 * y2 - y1 * x2 ) * ( x3 - x4 ) - ( x1 - x2 ) * ( x3 * y4 - y3 * x4 )) /
                 (( x1 - x2 ) * ( y3 - y4 ) - ( y1 - y2 ) * ( x3 - x4 ));
-        var y = (( x1 * y2 - y1 * x2 ) * ( y3 - y4 ) - ( y1 - y2 ) * ( x3 * y4 - y3 * x4 )) /
+        let y = (( x1 * y2 - y1 * x2 ) * ( y3 - y4 ) - ( y1 - y2 ) * ( x3 * y4 - y3 * x4 )) /
                 (( x1 - x2 ) * ( y3 - y4 ) - ( y1 - y2 ) * ( x3 - x4 ));
 
         if (isNaN(x) || isNaN(y)) {
@@ -84,7 +97,7 @@ if (require && require.main === module) {
                 t.push(...tests[i][l][p])
             }
         }
-        if (SegmentCollision.collide(...t)) {
+        if (SegmentCollision.collision(...t)) {
             console.log("Lines are intersecting");
         }
         else {
