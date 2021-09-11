@@ -61,7 +61,7 @@ class SegmentCollision {
 }
 
 
-if (require.main === module) {
+if (require && require.main === module) {
     let tests = [
         [
             [ [ 0, 0 ], [ 5, 5 ] ],
