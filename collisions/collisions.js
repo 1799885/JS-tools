@@ -71,6 +71,36 @@ class SegmentCollision {
         }
         return {x: x, y: y};
     }
+
+
+    /**
+     * Whenever two segments Intersect. This means the collision point is not the vertices of the lines
+     * @param {object} x1-y1 First point of the first segment.
+     * @param {object} x2-y2 Second point of the first segment.
+     * @param {object} x3-y3 First point of the second segment.
+     * @param {object} x4-y4 Second point of the second segment.
+     * @returns {boolean|object} False if there's no collision. Else, {x: X, y: Y} object with the collision point.
+     */
+    static intersection(x1, y1, x2, y2, x3, y3, x4, y4) {
+        let c = this.collision(x1, y1, x2, y2, x3, y3, x4, y4);
+        if (!c) { // If points not colliding
+            return false;
+        }
+        // If collision, check if edges connected (-> intersection = false)
+
+        let l1 = [[x1, y1], [x2, y2]];
+        let l2 = [[x3, y3], [x4, y4]];
+        
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < 2; j++) {
+                if (l1[i][0] == l2[j][0] && l1[i][1] == l2[j][1]) {
+                    return false;
+                }
+            }
+        }
+
+        return c;
+    }
 }
 
 
@@ -88,6 +118,10 @@ if (typeof require !== 'undefined' && require.main === module) {
             [ [ -20, 20 ], [ 18, 5 ] ],
             [ [ -15, 20 ], [ 0, 0 ] ]
         ],
+        [
+            [ [ 99, 214 ], [ 124, 172 ] ],
+            [ [ 99, 214 ], [ 161, 301 ] ]
+        ]
     ];
     
     for (let i = 0; i < tests.length; i++) {
@@ -97,12 +131,24 @@ if (typeof require !== 'undefined' && require.main === module) {
                 t.push(...tests[i][l][p])
             }
         }
-        if (SegmentCollision.collision(...t)) {
-            console.log("Lines are intersecting");
+        console.log(`Test ${i}`);
+        let c = SegmentCollision.collision(...t);
+        let inter = SegmentCollision.intersection(...t);
+
+        if (c) {
+            console.log(" - Lines are colliding");
         }
         else {
-            console.log("Lines are not intersecting");
+            console.log(" - Lines are not colliding");
         }
+
+        if (inter) {
+            console.log(" - Lines are intersecting");
+        }
+        else {
+            console.log(" - Lines are not intersecting");
+        }
+        console.log("\n")
     }
     
 }
