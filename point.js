@@ -1,6 +1,7 @@
+/**
+ * Basic class to represent a vector with some basic operations.
+ */
 class Point {
-    static radius = 20;
-
     constructor(x, y) {
         this._x = x;
         this._y = y;
@@ -8,6 +9,9 @@ class Point {
 
     // GETTERS
 
+    /**
+     * @returns The current position as an Array.
+     */
     get pos() {
         return [this.x, this.y];
     }
@@ -20,26 +24,32 @@ class Point {
         return this._y;
     }
 
-    get size() {
-        return [Point.radius, Point.radius];
-    }
-
-    get shape() {
-        return [...this.pos, ...this.size];
-    }
-
     // SETTERS
 
+    /**
+     * Overwrites the current position with the new ones.
+     * @param {number} x - New horizontal position.
+     * @param {number} y - New vertical position.
+     */
     moveTo(x, y) {
         this._x = x;
         this._y = y;
     }
 
+    /**
+     * Move the point relative to the current position.
+     * @param {number} x - Amount to travel in the horizontal axis.
+     * @param {number} y - Amount to travel in the vertical axis.
+     */
     advance(x, y) {
         this._x += x;
         this._y += y;
     }
 
+    /**
+     * Advances to the relative position given by the input.
+     * @param {Point} p - Point or vector to advance to.
+     */
     advanceWithDirection(p) {
         this.checkPoint(p);
         this.advance(p.x, p.y);
@@ -48,34 +58,62 @@ class Point {
 
     // Operations
 
+    /**
+     * @param {point} p - Point to compare
+     * @returns Distance between each point.
+     */
     dist(p) {
         this.checkPoint(p);
         let delta = this.minus(p);
         return delta.mag();
     }
 
+    /**
+     * @returns Magnitude or length of the point.
+     */
     mag() {
         return Point.mag(this.x, this.y);
     }
 
+    /**
+     * @returns Magnitude of the vector given by its coordinates. 
+     */
     static mag(x, y) {
         return Math.sqrt(x * x + y * y);
     }
 
+    /**
+     * @param {Point} p - Point to use.
+     * @returns New point with the addition of each coordinate (this + p).
+     */
     plus(p) {
         this.checkPoint(p);
         return new Point(this.x + p.x, this.y + p.y);
     }
 
+    /**
+     * @param {Point} p - Point to use.
+     * @returns The operation this - p; 
+     */
     minus(p) {
         this.checkPoint(p);
         return this.plus(p.times(-1));
     }
 
+    /**
+     * @param {number} n - Number to multiply by.
+     * @returns The operation n * this.
+     */
     times(n) {
         return new Point(this.x * n, this.y * n);
     }
 
+    /**
+     * @param {Point} p - variable to check.
+     * @returns True if the given input is a valid point.
+     * 
+     * @throws Exception if the input is not a valid point.
+     */
     checkPoint(p) {
         if (p instanceof Point) {
             return true;
