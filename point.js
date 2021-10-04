@@ -37,6 +37,15 @@ class Point {
     }
 
     /**
+     * Moves the point to the same coordinates as the given point.
+     * @param {Point} p - Point with the desired position
+     */
+    moveToPoint(p) {
+        this.checkPoint(p);
+        this.moveTo(p.x, p.y);
+    }
+
+    /**
      * Move the point relative to the current position.
      * @param {number} x - Amount to travel in the horizontal axis.
      * @param {number} y - Amount to travel in the vertical axis.
