@@ -64,6 +64,31 @@ class Point {
         this.advance(p.x, p.y);
     }
 
+    /**
+     * Multiplies the vector coordinates by the given number
+     * @param {number} n - Number to multiply each coordinate by
+     */
+    mult(n) {
+        this._x *= n;
+        this._y *= n;
+    }
+
+    /**
+     * Normalices the point.
+     */
+    normalize() {
+        this._x = this.x / this.mag();
+        this._y = this.y / this.mag();
+    }
+
+    /**
+     * Changes the magnitude of the point without changing the direction
+     * @param {number} mag - New magnitude
+     */
+    setMagnitude(mag) {
+        this.mult(mag / this.mag);
+    }
+
 
     // Operations
 
