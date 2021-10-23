@@ -89,6 +89,12 @@ class Point {
         this.mult(mag / this.mag());
     }
 
+    rotate(angle) {
+        let m = this.mag();
+        this._x = m * Math.cos(angle);
+        this._y = m * Math.sin(angle);
+    }
+
 
     // Operations
 
