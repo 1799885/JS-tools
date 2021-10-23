@@ -86,7 +86,7 @@ class Point {
      * @param {number} mag - New magnitude
      */
     setMagnitude(mag) {
-        this.mult(mag / this.mag);
+        this.mult(mag / this.mag());
     }
 
 
