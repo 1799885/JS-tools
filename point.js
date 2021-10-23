@@ -24,6 +24,14 @@ class Point {
         return this._y;
     }
 
+    get angle() {
+        return Math.atan2(this.y, this.x);
+    }
+
+    get magnitude() {
+        return this.mag();
+    }
+
     // SETTERS
 
     /**
@@ -93,6 +101,14 @@ class Point {
         let m = this.mag();
         this._x = m * Math.cos(angle);
         this._y = m * Math.sin(angle);
+    }
+
+    rotateBy(angle) {
+        let m = this.magnitude;
+        let a = this.angle;
+
+        this._x = m * Math.cos(a + angle);
+        this._y = m * Math.sin(a + angle);
     }
 
 
