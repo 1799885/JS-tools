@@ -178,4 +178,8 @@ class Point {
         console.error(`Error with the given point!\n`, p, "\nIt is not a point!\n");
         throw new Error(`The given argument is not a point!`);
     }
+
+    clone() {
+        return new Point(this._x, this._y);
+    }
 }
